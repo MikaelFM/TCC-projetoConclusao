@@ -9,8 +9,40 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-button {
-    width: 10vw;
-    height: 5vh;
-    border-radius: 40px;   
+button:not(#app button) {
+    font-family: "Montserrat", sans-serif;
+    border: 1.5px solid black;
+    border-radius: 40px;
+    width: 65%;
+    height: 60%;
+    padding: 0 1vw;
+    font-size: 0.75vw;
+    transition: all 0.1s;
+    cursor: pointer;
+}
+.control {
+  position: relative;
+  width: 30vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.5vw;
+}
+.flex-buttons {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+}
+.flex-buttons input {
+    width: 65% !important;
+}
+.flex-buttons  input.cancel {
+    width: 30% !important;
+    background-color: rgba(215, 215, 215, 0.46);
+    border: none;
+    color: black;
+}
+.flex-buttons  input.cancel:hover {
+    background-color: rgba(215, 215, 215);
+    border: none;
 }

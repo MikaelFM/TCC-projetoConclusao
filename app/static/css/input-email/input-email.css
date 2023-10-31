@@ -1,0 +1,27 @@
+section {
+    flex-direction: column;
+    align-items: center;
+    width: 40vw;
+    height: auto;
+    padding: 2vw 0;
+}
+form h1 {
+    font-size: 1.5vw;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+.control {
+    margin: 0.5vw 0;
+}
+form .button {
+    width: 65%;
+    height: 2.2vw;
+}
+.na-email {
+    height: 1vw;
+    font-size: 0.7vw;
+}
+.red {
+    color: red;
+}

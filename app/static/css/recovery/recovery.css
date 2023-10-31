@@ -1,0 +1,40 @@
+@import "../new_password/new_password.css";
+
+form {
+    width: 100%;
+}
+form h1 {
+    font-size: 1.7vw;
+    margin: 0;
+}
+form p {
+    width: 50%;
+    font-size: 0.85vw;
+    margin: 2vw 0 1.3vw 0;
+}
+.control {
+    margin: 0.5vw;
+}
+.error {
+    color: red;
+    width: 100%;
+    margin: 0;
+}
+.alert {
+    position: absolute;
+    font-size: 0.8vw;
+    padding: 0.5vw 2vw;
+    border-radius: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    bottom: 7vw;
+}
+input.disabled, input.disabled:hover {
+    background-color: rgba(128, 128, 128, 0.83);
+    border: none;
+    cursor: auto;
+}
+i {
+    font-size: 3vw;
+    padding-bottom: 1vw;
+}

@@ -1,0 +1,131 @@
+section#home {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    display: flex;
+}
+
+section#home h2 {
+    margin-bottom: 2vw;
+    font-size: 1.3vw;
+}
+section#home article {
+    font-family: 'Montserrat', sans-serif;
+}
+section#home div.page {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 5vh 4vw;
+}
+section#home article {
+    height: 100%;
+}
+section#home article#main-content {
+    width: 60%;
+    margin-top: 1vw;
+    margin-left: 4vw;
+}
+section#home article#main-content .title {
+    display: flex;
+    justify-content: space-between;
+}
+section#home article#main-content .title .text h1 {
+    font-size: 1.6vw;
+    font-weight: 700;
+}
+section#home article#main-content .title .text p {
+    color: #737373;
+    font-weight: 600;
+    margin-top: 0.4vw;
+}
+section#home article#main-content .title .button button {
+    background-color: black;
+    color: white;
+    float: right;
+    font-size: 1.3vw;
+    border-radius: 100%;
+    width: 2.3vw;
+    height: 2.3vw;
+    margin-right: 7vw;
+}
+section#home article#main-content .events, article#main-content .files {
+    margin-top: 3vw;
+}
+section#home article#main-content .events .events-slider {
+    height: 7.5vw;
+    display: flex;
+    gap: 1vw;
+    width: calc(100%);
+}
+section#home article#main-content .events .events-slider .event {
+    background: linear-gradient(#bed8f69e, #c2d9f358);
+    width: 38%;
+    height: 100%;
+    border-radius: 15px;
+    padding: 1.3vw 1.3vw;
+    font-weight: 500;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    /* border: 3px solid rgb(192, 215, 242) */
+}
+section#home article#main-content .events .events-slider .event .desc {
+    font-size: 0.7vw;
+    color: #6c6c6c;
+    font-weight: 600;
+}
+section#home article#main-content .events .events-slider .event .name {
+    font-size: 0.9vw;
+    margin-top: 0.2vw;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+}
+section#home article#main-content .events .events-slider .event .date {
+    font-size: 1.3vw;
+    margin-top: 0.8vw;
+    font-weight: 700;
+    color: rgb(0, 0, 0);
+}
+section#home article#main-content .files h2 {
+    margin-bottom: 2.5vw;
+}
+section#home article#main-content .files .files-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 30vw;
+    row-gap: 2.5vw;
+}
+section#home article#main-content .files .files-box .file {
+    width: 50%;
+    height: 2.5vw;
+    display: flex;
+    font-weight: 600;
+    gap: 1vw;   
+}
+section#home article#main-content .files .files-box .file:nth-child(even){
+    justify-content: end;
+}
+section#home article#main-content .files .files-box .file .desc .date {
+    font-size: 0.65vw;
+    color: #737373;
+}
+section#home article#main-content .files .files-box .file .desc .title {
+    max-width: 3vw;
+    flex-wrap: wrap;
+    font-size: 0.7vw;
+} 
+section#home article#main-content .files .files-box .file svg {
+    height: 100%;
+}
+section#home article#secondary-content {
+    padding: 4vw 0;
+}
+section#home article#secondary-content h2 {
+    margin-left: 0.65vw;
+    font-size: 1.4vw;
+}
+section#home article#secondary-content .calendar {
+    margin-top: 2.5vw;
+}

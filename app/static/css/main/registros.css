@@ -1,0 +1,49 @@
+section#registros {
+    height: 100%;
+}
+section#registros .title .text h1 {
+    font-size: 1.6vw;
+    font-weight: 600;
+}
+section#registros .table {
+    margin-top: 2vw;
+}
+section#registros {
+    padding: 0 2vw 2vw 2vw;
+}
+section#registros .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5vw;
+}
+section#registros table {
+    border: 1px solid rgba(128, 128, 128, 0.270);
+    border-spacing: 0px;
+    border-radius: 15px;
+    font-size: 0.8vw;
+    width: 100%;
+}
+section#registros table thead, table tbody {
+    border-collapse: collapse;
+}
+section#registros table td {
+    border-right: 1px solid rgba(128, 128, 128, 0.270);
+}
+section#registros table thead tr td {
+    padding: 0.5vw 1vw;
+}
+section#registros table tbody tr td {
+    padding: 1.5vw 1vw;
+    border-top: 1px solid rgba(128, 128, 128, 0.270);
+}
+section#registros table tr {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.270);
+}
+section#registros table thead tr {
+    font-weight: 500;
+    border-color: red;
+}
+section#registros table td:last-child {
+  border-right: none;
+}

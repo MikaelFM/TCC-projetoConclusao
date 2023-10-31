@@ -1,0 +1,61 @@
+<section id="login">
+    <form id="form-login" action="emailConfirmation" method="post" @submit="submit">
+        <h1>Login</h1>
+        <div class="control">
+            <input
+                type="email"
+                name="email"
+                id="email"
+                class="input"
+                placeholder=""
+                v-model="email"
+            >
+            <label
+                for="email"
+                class="label-input"
+             >
+                E-mail
+            </label>
+        </div>
+        <div class="control">
+            <input
+                type="password"
+                name="password"
+                id="password"
+                class="input"
+                placeholder=""
+                v-model="password"
+            >
+            <label
+                for="password"
+                class="label-input"
+            >
+                Senha
+            </label>
+        </div>
+        <div class="control double-checkbox" style="height: 2vw">
+            <div class="check-box">
+                <input type="checkbox" id="remember-me">
+                <label for="remember-me">Lembrar de mim</label>
+            </div>
+            <div class="error">
+                <p>[[msgError]]</p>
+            </div>
+        </div>
+        <div class="control">
+            <input type="submit" value="Confirmar">
+        </div>
+        <div class="esqueceu_senha">
+            <a href="/passwordRecovery">Esqueceu a senha?</a>
+        </div>
+    </form>
+    <div class="box">
+        <div class="logo-ifrs"></div>
+        <p>
+            Ainda não tem conta? <a href="/register">Registre-se</a>
+        </p>
+    </div>
+</section>
+<script>
+    $('#email').focus()
+</script>

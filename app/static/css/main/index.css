@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.cdnfonts.com/css/nimbus-sans-d-ot');
+
+@font-face {
+    font-family: 'helvetica';
+    src: url(../../fonts/HelveticaNowDisplay-Medium.ttf);
+}
+:root{
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #c2d9f391;
+    --primary-color-hover: rgba(194, 217, 243, 0.713);
+    --primary-color-light: #F6F5FF;
+    --text-color: #5d6061;
+    --hover-color: #bcbcbc44;
+
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
+}
+#app input, #app select, #app input::after, #app input:focus, #app select::after, #app select:focus {
+    border: none;
+    box-shadow: 0;
+    outline: none;
+}
+#app {
+    font-family: 'Montserrat', sans-serif;
+}
+#app body {
+    overflow-y: auto;
+}
+#app div.page {
+    display: flex;
+    width: 100%;
+    padding: 5vh 4vw;
+}
+#app section {
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+}
+#app button {
+    font-family: 'Montserrat', sans-serif;
+}
+#app .calendar {
+    width: 24vw;
+    height: 45vh;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+#app .calendar .head, .calendar .head .mes-ano {
+    display: flex;
+    align-items: center;
+}
+#app .calendar .head {
+    justify-content: space-between;
+    padding: 0 0.7vw;
+}
+#app .calendar .head .mes-ano {
+    font-size: 1.3vw;
+    font-weight: bold;
+    justify-content: center;
+    gap: 0.5vw;
+}
+#app .calendar .arrows button {
+    margin: 0 0 0 0.5vw;
+    font-family:monospace;
+    background-color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.1vw;
+    width: 2vw;
+    height: 4vh;
+    border: none;
+    border-radius: 10%;
+}
+#app .calendar .arrows button:hover {
+    background-color: var(--primary-color-hover);
+}
+#app .calendar .datas {
+    margin-top: 1vw;
+}
+#app .calendar .datas div {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.7vw;
+    font-weight: 700;
+}
+#app .calendar .datas .dia {
+    width: calc(100%/7 - 4%);
+    margin: 0 2%;
+    display: flex;
+    justify-content: center;
+    height: 5vh;
+    border-radius: 20%;
+}
+#app .calendar .datas .dias .dia:not(.hoje, .selected):hover {
+    background-color: var(--hover-color);
+}
+#app .calendar .datas .header p {
+    font-size: 0.7vw;   
+}
+#app .calendar .datas .dia p {
+    text-align: center;
+    width: 100%;
+    margin: auto;
+}
+#app .calendar .datas .header p, .calendar .datas div.gray:not(.hoje, .selected) p {
+    color:#9b9c9c;
+}
+#app .calendar .datas .dias {
+    margin-top: 0.5vw;
+}
+#app .calendar .datas .dias div.hoje {
+    background-color: black;
+    color: white;
+}
+#app .calendar .datas .dias div.selected:not(.hoje) {
+    background-color: var(--primary-color);
+}
+#app .feriado {
+    color: red;
+}
+
+#app #body-page {
+    width: 81vw;
+    height: 90vh;
+    position: fixed;
+    right: 0;
+    top: 10vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}

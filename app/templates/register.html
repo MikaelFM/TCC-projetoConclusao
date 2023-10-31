@@ -1,0 +1,122 @@
+<section id="register">
+    <div class="box">
+        <div class="logo-ifrs"></div>
+        <p>
+            Já possui uma conta? <a href="/login">Faça login</a>
+        </p>
+    </div>
+    <form action="/emailConfirmation" method="post" @submit="submit">
+        <h1>Registre-se</h1>
+        <div class="control">
+            <input
+                type="text"
+                name="nome"
+                id="nome"
+                v-model="nome"
+                class="input"
+                placeholder=""
+            >
+            <label
+                for="nome"
+                class="label-input"
+             >
+                Nome completo
+            </label>
+        </div>
+        <div class="control">
+            <input
+                type="cpf"
+                name="cpf"
+                id="cpf"
+                v-model="cpf"
+                class="input"
+                placeholder=""
+            >
+            <label
+                for="cpf"
+                class="label-input"
+            >
+                CPF
+            </label>
+        </div>
+        <div class="control">
+            <input
+                type="text"
+                name="telefone"
+                id="telefone"
+                v-model="telefone"
+                class="input"
+                placeholder=""
+            >
+            <label
+                for="telefone"
+                class="label-input"
+            >
+                Telefone
+            </label>
+        </div>
+        <div class="control">
+            <input
+                type="email"
+                name="email"
+                id="email"
+                v-model="email"
+                class="input"
+                placeholder=""
+            >
+            <label
+                for="email"
+                class="label-input"
+            >
+                E-mail
+            </label>
+        </div>
+        <div class="control">
+            <input
+                type="password"
+                name="password"
+                id="password"
+                v-model="password"
+                class="input"
+                placeholder=""
+            >
+            <label
+                for="password"
+                class="label-input"
+            >
+                Senha
+            </label>
+        </div>
+        <div class="control">
+            <input
+                type="password"
+                name="confirm-password"
+                id="confirm-password"
+                v-model="confirmPassword"
+                class="input"
+                placeholder=""
+            >
+            <label
+                for="confirm-password"
+                class="label-input"
+            >
+                Confirmar Senha
+            </label>
+        </div>
+        <!-- <div class="control">
+            <div class="check-box">
+                <input type="checkbox">
+                <label for="">Mantenha-me conectado</label>
+            </div>
+        </div> -->
+        <div class="error" v-if="msgError != ''">
+            <p>[[msgError]]</p>
+        </div>
+        <div class="control">
+            <input type="submit" value="Confirmar">
+        </div>
+    </form>
+</section>
+<script>
+    $('#nome').focus()
+</script>

@@ -1,0 +1,220 @@
+section#agenda {
+    width: 100%;
+    height: 80vh;
+}   
+section#agenda article {
+    width: 100%;
+    height: 100%;
+}
+section#agenda .agenda {
+    height: calc(100% - 6vw);
+}
+section#agenda .mes-view {
+    display: grid;
+    grid-template-columns: repeat(7, calc((100%)/7));
+    grid-template-rows: repeat(5, 20%);
+}
+section#agenda .ano-view, .mes-view {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+section#agenda .header {
+    height: 6vw;
+    position: relative;
+    width: 100%;
+}
+section#agenda .header .flex-content { 
+   display: flex;
+   align-items: center;
+   padding-left: 0.7vw;
+   width: 100%;
+   font-size: 1.4vw;
+   position: relative;
+}
+section#agenda .header .flex-content .arrows {
+    display: flex;
+    margin-right: 1vw;
+    align-items: center;
+    justify-content: space-between;
+    width: 2vw;
+}
+section#agenda .header .flex-content .arrows  button {
+   font-family: monospace;
+   background-color: transparent;
+   border: none;
+   font-size: 1.2vw;
+}
+section#agenda .header .flex-content .right-buttons {
+    display: flex;
+    position: absolute;
+    justify-content: right;
+    gap: 1vw;
+    right: 1vw;
+}
+section#agenda .header .flex-content .button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75vw;
+    padding: 0.5vw 1vw;
+    background-color: transparent;
+    border: 1px solid rgba(128, 128, 128, 0.270);
+    border-radius: 4px;
+    font-weight: 500;
+}
+section#agenda .header .flex-content .button.today {
+    margin-right: 1vw;
+}
+section#agenda .header .flex-content select.button {
+    padding: 0 0.5vw;
+}
+section#agenda .header .flex-content .button.novo {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+}
+section#agenda .header .mes-header {
+    display: flex;
+    font-size: 0.8vw;
+    justify-content: start;
+    font-weight: 500;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+section#agenda .header .mes-header p {
+    width: calc((100%)/7);
+    padding-bottom: 0.5vw;
+    text-align: left;
+    text-indent: 0.7vw;
+    color: gray;
+}
+section#agenda .header .date {
+    font-weight: 600;
+}
+section#agenda .mes-view .dia {
+    background-color: white;
+    padding: 0.7vw;
+    font-family: 'helvetica';
+    letter-spacing: 0.02vw;
+    font-weight: 500;
+    border-right: 0.5px solid rgba(128, 128, 128, 0.232);
+    border-bottom: 0.5px solid rgba(128, 128, 128, 0.232);
+}
+section#agenda .mes-view .dia:nth-child(7n) {
+    border-right: none;
+}
+section#agenda .mes-view .dia:nth-last-child(-n+7) {
+    border-bottom: none;
+}
+section#agenda .mes-view .dia .event {
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    padding: 0.12vw 0.4vw;
+    font-size: 0.7vw;
+    margin-bottom: 0.3vw;
+}
+section#agenda .numero-dia {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1vw;
+    width: 100%;
+    font-weight: 600;
+    margin-bottom: 0.3vw;
+}
+section#agenda .ano-view {
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(3, calc((100%)/3));
+    gap: 1vw;
+    margin-top: -3vw;
+}
+section#agenda .ano-view .mes {
+   width: 15vw;
+   height: 10vw; 
+}
+section#agenda .ano-view .mes-header {
+    height: 20%;
+    font-size: 0.8vw;
+    padding: 0.4vw 0.8vw;
+    font-weight: 600;
+    display: flex;
+    align-items: end;
+}
+section#agenda .ano-view .grid-dias {
+    font-size: 0.7vw;
+    font-family: 'helvetica';
+    display: grid;
+    height: 80%;
+    width: 100%;
+    grid-template-columns: repeat(7, calc((100%)/7));
+    grid-template-rows: repeat(5, calc((100%)/6));
+}
+section#agenda .ano-view .grid-dias .dia {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+}
+section#agenda .ano-view .grid-dias .dia p {
+    text-align: center;
+}
+section#agenda .ano-view .grid-dias .name {
+    color: gray;
+}
+section#agenda .programacao-view {
+    width: calc(100% + 4vw);
+    height: 100%;
+    margin-top: -2vw;
+    margin-left: -2vw;
+}
+section#agenda .programacao-view .evento {
+    border-bottom: 0.5px solid rgba(128, 128, 128, 0.232);
+    width: 100%;
+    padding: 1.5vw 2.7vw;
+}
+section#agenda .programacao-view .evento:nth-child(1){
+    border-top: 0.5px solid rgba(128, 128, 128, 0.232);
+}
+section#agenda .programacao-view .evento .dia-numero {
+    width: 2vw;
+    height: 2vw;
+    background-color: rgba(128, 128, 128, 0.271);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    font-weight: 600;
+}
+section#agenda .flex {
+    display: flex;
+    gap: 1vw;
+}
+section#agenda .programacao-view .evento .dia-numero {
+    background-color: var(--primary-color);
+    font-size: 1vw;
+    color: black;
+}
+section#agenda .programacao-view .evento .detalhe {
+    margin-top: 0.45vw;
+    font-size: 0.9vw;
+    color: #000000;
+    font-weight: 500;
+}
+section#agenda .programacao-view .evento .eventos {
+    margin-top: 0.5vw;
+    list-style-type: none;
+    margin-left: 4.4vw;
+}
+section#agenda .programacao-view .evento .eventos li {
+    position: relative;
+    line-height: 1.5;
+    font-size: 0.75vw;
+    line-height: 1.3vw;
+}
+section#agenda .programacao-view .evento .eventos li::before {
+    content: '\2022';
+    color: #9dc6f48f;
+    font-size: 2.7vw;
+    position: absolute;
+    left: -1.5vw;
+    top: -0.17vw;
+  }
