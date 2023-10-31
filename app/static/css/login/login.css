@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500&display=swap");
+*, *:focus {
+  box-sizing: 0;
+  box-shadow: 0;
+  border: none;
+  outline: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f8f8f8;
+  font-family: "Montserrat", sans-serif;
+}
+
+section {
+  background-color: white;
+  width: 55vw;
+  height: 30vw;
+  border-radius: 40px;
+  display: flex;
+  box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+}
+
+.box {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form, .box {
+  padding: 5vh 0;
+}
+
+form {
+  padding-left: 2vw;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form h1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.7vw;
+}
+
+.check-box {
+  font-size: 0.7vw;
+  display: flex;
+  align-items: center;
+  gap: 0.3vw;
+}
+
+.double-checkbox {
+  justify-content: space-between;
+  width: 80%;
+}
+
+input:not([type=checkbox]) {
+  font-family: "Montserrat", sans-serif;
+  border: 1.5px solid black;
+  border-radius: 40px;
+  width: 65%;
+  height: 60%;
+  padding: 0 1vw;
+  font-size: 0.75vw;
+  transition: all 0.1s;
+}
+
+input:not([type=checkbox], [type=checkbox]):focus {
+  border-color: rgba(157, 188, 223, 0.8078431373);
+}
+
+input[type=password] {
+  font-size: 0.9vw;
+}
+
+input[type=password]::-moz-placeholder {
+  font-size: 0.75vw;
+}
+
+input[type=password]::placeholder {
+  font-size: 0.75vw;
+}
+
+input[type=submit] {
+  background-color: black;
+  color: white;
+  width: 73%;
+  height: 65%;
+  transition: all 0.2s;
+}
+
+input[type=submit]:hover {
+  background-color: rgba(157, 188, 223, 0.8078431373);
+  border: 1px solid rgba(157, 188, 223, 0.8078431373);
+}
+
+.logo-ifrs {
+  width: 15vw;
+  height: 18vw;
+  margin-top: 1vw;
+  background-image: url("../../images/ifrs.png");
+  background-size: 90%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.box p {
+  margin-top: 1.3vw;
+  font-size: 0.8vw;
+}
+
+a {
+  color: black;
+  font-weight: bold;
+}
+
+a:hover {
+  color: rgba(157, 188, 223, 0.8078431373);
+}
+
+.label-input {
+  text-align: left;
+  position: absolute;
+  left: 5.2vw;
+  font-size: 0.75vw;
+  cursor: text;
+  color: gray;
+  transition: top 250ms ease-in left 250ms ease-in font-size 250ms ease-in;
+}
+
+.input:not(:-moz-placeholder-shown).input:not(:focus) ~ .label-input {
+  background-color: rgb(255, 255, 255);
+  padding: 0.1vw;
+  top: 0.1vw;
+  font-size: 0.65vw;
+  cursor: default;
+}
+
+.input:focus ~ .label-input,
+.input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
+  background-color: rgb(255, 255, 255);
+  padding: 0.1vw;
+  top: 0.1vw;
+  font-size: 0.65vw;
+  cursor: default;
+}
+
+.esqueceu_senha {
+  width: calc(65% + 2vw);;
+  margin-top: 0.5vw;
+  font-size: 0.7vw;
+  font-weight: normal;
+  text-align: center;
+}
+
+.error {
+  color: red;
+  font-size: 0.7vw;
+  font-weight: 500;
+}

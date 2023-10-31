@@ -1,0 +1,52 @@
+form h1 {
+    font-size: 2.3vw;
+    margin-top: 2vw;
+}
+.control {
+    height: 3vw;
+}
+input:not([type=checkbox]) {
+    font-family: "Montserrat", sans-serif;
+    border: 1.5px solid black;
+    border-radius: 40px;
+    width: 65%;
+    height: 70%;
+    padding: 0 1vw;
+    font-size: 0.75vw;
+    transition: all 0.1s;
+}
+section {
+    background-color: white;
+    width: 55vw;
+    height: 35vw;
+}
+.logo-ifrs {
+    width: 18vw;
+    height: 25vw;
+    margin-top: 0vw;
+    background-image: url("../../images/ifrs.png");
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.box p {
+    margin-top: 1vw;
+}
+input[type=submit] {
+    background-color: black;
+    color: white;
+    width: 73%;
+    height: 77%;
+}
+.input:focus ~ .label-input,
+.input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
+  background-color: rgb(255, 255, 255);
+  padding: 0.1vw;
+  top: -0.1vw;
+  font-size: 0.65vw;
+  cursor: default;
+}
+form {
+    padding-left: 0;
+    padding-right: 2vw;
+  }
