@@ -51,7 +51,7 @@ def backup_emails_programados():
     emailsProgramados = EmailProgramado.getProgramacaoEmails()
     for email in emailsProgramados:
         if email['data_hora_envio'] <= datetime.now():
-            taskq
+            print("ba")
         else:
             scheduler.add_job(
                 id="my_job",
