@@ -7,6 +7,7 @@ section#servidores .filters {
     gap: 1vw;
     margin: 1vw 0;
 }
+
 section#servidores .button {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.75vw;
@@ -16,31 +17,38 @@ section#servidores .button {
     border-radius: 4px;
     font-weight: 500;
 }
+
 section#servidores .filters .search-box {
     padding: 0;
     display: flex;
     height: 2vw;
 }
+
 section#servidores .filters *:not(.fa-solid) {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.75vw;
 }
+
 section#servidores .filters .search-box * {
     height: 100%;
 }
+
 section#servidores .filters .search-box #search-by {
     border-radius: 4px 0 0 4px;
     border-right: 1px solid rgba(128, 128, 128, 0.270);
     padding: 0 0.5vw;
 }
+
 section#servidores .filters .search-box #search-by select {
     border-radius: 4px 0 0 4px;
     width: 6vw;
 }
+
 section#servidores .filters .search-box input {
     width: 60vw;
     padding: 0 1vw;
 }
+
 section#servidores .filters .search-box button {
     transition: all 0.1s;
     border: none;
@@ -55,22 +63,27 @@ section#servidores .filters .search-box button {
     border-radius: 0 4px 4px 0;
     gap: 0.5vw;
 }
+
 section#servidores .filters .search-box button:hover {
     background-color: var(--primary-color);
 }
+
 section#servidores .filters .search-box button * {
     height: 0.7vw;
     font-size: 0.7vw;
 }
+
 section#servidores .filters .sort #orderBy {
     width: 4vw;
     border: none;
     padding: 0;
 }
+
 section#servidores {
     overflow-y: auto;
     padding: 0 2vw 2vw 2vw;
 }
+
 section#servidores .title {
     display: flex;
     justify-content: space-between;
@@ -87,15 +100,17 @@ section#servidores .title .button-new button {
     background-color: black;
     color: white;
 }
+
 section#servidores .pessoas {
-   width: 100%;
-   font-family: "Poppins", sans-serif; 
-   display: grid;
-   grid-template-columns: 1fr 1fr 1fr;
-   justify-content: center;
-   align-items: center;
-   gap: 4vw;
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 4vw;
 }
+
 section#servidores .card {
     box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
     border-radius: 0.6em;
@@ -107,6 +122,7 @@ section#servidores .card {
     transition: 0.3s;
     background-color: #ffffff;
     padding: 5em 0;
+    position: relative;
 }
 
 section#servidores .card .img-container {
@@ -128,12 +144,14 @@ section#servidores .card h3 {
 }
 
 section#servidores .card p {
-    margin: 0.5em 0 0 0;  
+    margin: 0.5em 0 0 0;
 }
+
 section#servidores .card .cargo {
-  text-transform: uppercase;
-  font-weight: 400;
+    text-transform: uppercase;
+    font-weight: 400;
 }
+
 section#servidores .card .data-admissao {
     font-weight: 300;
     font-size: 0.7vw;
@@ -153,6 +171,7 @@ section#servidores .card a {
     font-size: 1.4em;
 }
 
+/*
 section#servidores .card:hover {
     background: linear-gradient(#c2d9f3, #c2d9f391);
     color: #ffffff;
@@ -160,4 +179,53 @@ section#servidores .card:hover {
 
 section#servidores .card:hover .img-container {
     transform: scale(1.15);
-}   
+}
+*/
+
+section#servidores .pessoas .card .options {
+    padding: 0.2vw;
+    display: flex;
+    vertical-align: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: 1.3vw;
+    position: absolute;
+    top: 0.5vw;
+    right: 0.5vw;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 50%;
+    height: 1.5vw;
+    width: 1.5vw;
+}
+section#servidores .pessoas .card .options:hover {
+    background: var(--primary-color);
+}
+section#servidores .pessoas .card .edit-content {
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    width: 5vw;
+    top: 2vw;
+    right: 0.5vw;
+    box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
+    border-radius: 9px;
+    padding: 0.5vw 0;
+}
+section#servidores .pessoas .card .edit-content .action {
+    width: 100%;
+    border: none;
+    padding: 0.4vw 0;
+    background: none;
+    font-size: 0.7vw;
+    font-weight: 400;
+}
+section#servidores .pessoas .card .edit-content .action:hover {
+    background-color: var(--primary-color);
+}
+section#servidores .pessoas .card .edit-content.hidden {
+    display: none;
+}

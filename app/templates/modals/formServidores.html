@@ -1,0 +1,91 @@
+<form id="formServidores" @submit="salvar">
+    <div class="control">
+        <input
+                type="text"
+                name="nome"
+                class="input"
+                placeholder=""
+                v-model="nome"
+        >
+        <label
+                class="label-input"
+        >
+            Nome
+        </label>
+
+    </div>
+    <div class="control">
+        <input
+                type="email"
+                name="email"
+                class="input"
+                placeholder=""
+                v-model="email"
+        >
+        <label
+                class="label-input"
+        >
+            E-mail
+        </label>
+    </div>
+    <div class="control">
+        <div class="control">
+            <input
+                    type="tel"
+                    name="telefone"
+                    class="input"
+                    placeholder=""
+                    v-model="telefone"
+            >
+            <label
+                    class="label-input"
+            >
+                Telefone
+            </label>
+        </div>
+        <div class="control">
+            <input
+                    type="cpf"
+                    name="cpf"
+                    class="input"
+                    placeholder=""
+                    v-model="cpf"
+            >
+            <label
+                    class="label-input"
+            >
+                CPF
+            </label>
+        </div>
+    </div>
+    <div class="control">
+        <div class="control">
+            <input
+                    type="date"
+                    name="dataAdmissao"
+                    class="input"
+                    placeholder=""
+                    v-model="dataAdmissao"
+            >
+            <label
+                    class="label-input"
+            >
+                Data de Admissão
+            </label>
+        </div>
+        <div class="control">
+            <select v-model="tipo" class="input">
+                <option value="" class="disabled" disabled>Tipo</option>
+                <option v-for="(tipo) in tipoServidores" :value="tipo.id">{{tipo.descricao}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="control">
+        <select v-model="cargo" class="input select">
+            <option value="" disabled>Cargo</option>
+        </select>
+    </div>
+    <div class="control">
+        <input class="input" type="submit" value="Confirmar" @click="">
+    </div>
+</form>

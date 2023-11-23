@@ -40,52 +40,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr v-for="(arquivo) in this.$root.dados.arquivos">
                 <td>
-                    <i class='bx bxs-file-pdf'></i>
-                    Documentação.pdf
+                    <i :class="$root.getFileClass(arquivo.tipo)"></i>
+                    {{arquivo.nome}}
                 </td>
-                <td>PDF</td>
-                <td>12Mb</td>
-                <td>08 de Ago. 2023</td>
+                <td>{{arquivo.tipo.toUpperCase()}}</td>
+                <td>{{arquivo.tamanho}}Mb</td>
+                <td>{{$root.formatarDataHora(arquivo.data_atualizacao, 'DD |M| YYYY')}}</td>
             </tr>
-            <tr>
-                <td>
-                    <i class='bx bxs-file'></i>
-                    Teste.docx
-                </td>
-                <td>DOCX</td>
-                <td>14Mb</td>
-                <td>06 de Ago. 2023</td>
-            </tr>
-            <tr>
-                <td>
-                    <i class='bx bxs-file icon-planilha'></i>
-                    Documentação.xls
-                </td>
-                <td>XLS</td>
-                <td>21Mb</td>
-                <td>09 de Ago. 2023</td>
-            </tr>
-            <tr>
-                <td>
-                    <i class='bx bxs-file'></i>
-                    Teste.docx
-                </td>
-                <td>DOCX</td>
-                <td>14Mb</td>
-                <td>06 de Ago. 2023</td>
-            </tr>
-            <tr>
-                <td>
-                    <i class='bx bxs-file'></i>
-                    Teste.docx
-                </td>
-                <td>DOCX</td>
-                <td>14Mb</td>
-                <td>06 de Ago. 2023</td>
-            </tr>
-
         </tbody>
     </table>
 </section>

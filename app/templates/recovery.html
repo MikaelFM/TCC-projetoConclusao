@@ -36,11 +36,11 @@
         <button onclick="window.location.href = '/login'">OK</button>
     </div>
 </section>
-{% if token == 'expirado':%}
+[% if token == 'expirado':%]
     <div class="alert" role="alert">
         Token expirado, por favor, repita o processo
     </div>
-{% endif %}
+[% endif %]
 <script>
     $('#email').focus()
 </script>

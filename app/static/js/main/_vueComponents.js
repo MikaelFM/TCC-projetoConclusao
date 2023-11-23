@@ -40,6 +40,7 @@ Vue.component('calendar-agenda', {
                     <div class="mes-view" v-if="isMesView()">
                         <div class="dia" v-for="(item, key) in arrayDatas">
                             <p class="numero-dia">{{item.getDate()}}</p>
+                            <div class="event" v-for="(evento) in getEventsDay(item)">{{evento.descricao}}</div>
                         </div>
                     </div>
                     <div class="ano-view" v-if="isAnoView()">
@@ -76,35 +77,13 @@ Vue.component('calendar-agenda', {
                         </div>
                     </div>
                     <div class="programacao-view" v-if="isProgramacaoView()">
-                        <div class="evento">
+                        <div class="evento" v-for="(diaEvento, key) in dateEvents">
                             <div class="flex">
-                                <p class="dia-numero">4</p>
-                                <p class="detalhe">Agosto/2023 - Sexta-Feira</p>     
+                                <p class="dia-numero">{{key.split('/')[0]}}</p>
+                                <p class="detalhe">{{meses[parseInt(key.split('/')[1])]}}/{{key.split('/')[2]}} - {{getDiaDaSemana(diaEvento)}}</p>     
                             </div>
-                            <ul class="eventos">
-                                <li>Evento Teste</li>
-                                <li>Tomar Café</li>
-                                <li>Dormir</li>
-                                <li>Deitar</li>
-                            </ul>
-                        </div>
-                        <div class="evento">
-                            <div class="flex">
-                                <p class="dia-numero">9</p>
-                                <p class="detalhe">Setembro/2023 - Quarta-Feira</p>     
-                            </div>
-                            <ul class="eventos">
-                                <li>Evento Teste</li>
-                            </ul>
-                        </div>
-                        <div class="evento">
-                            <div class="flex">
-                                <p class="dia-numero">22</p>
-                                <p class="detalhe">Outubro/2023 - Segunda-Feira</p>     
-                            </div>
-                            <ul class="eventos">
-                                <li>Evento Teste</li>
-                                <li>Tomar Café</li>
+                            <ul class="eventos" v-for="(evento) in diaEvento">
+                                <li>{{evento.title != 'Personalizado' ? evento.title + ' - ' : '' }} {{evento.descricao}}</li>
                             </ul>
                         </div>
                     </div>
@@ -122,6 +101,9 @@ Vue.component('calendar-agenda', {
     computed: {
         arrayAno: function(){
             return getArrayDatasAno(this.calendarioAno)
+        },
+        dateEvents: function () {
+            return this.$root.eventsList
         }
     },
     methods: Object.assign({}, getCalendarMethods(), {
@@ -164,6 +146,15 @@ Vue.component('calendar-agenda', {
         },
         isProgramacaoView: function(){
             return this.modelo === 'programacao-active'
+        },
+        getEventsDay: function (date) {
+            let indexData = this.$root.formatarDataHora(date, 'DD/MM/YYYY')
+            return this.dateEvents[indexData];
+        },
+        getDiaDaSemana(date){
+            let data = new Date(date[0]['data_inicio'])
+            let diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+            return diasDaSemana[data.getDay()]
         }
     })
 });
@@ -223,12 +214,12 @@ Vue.component('navbar', {
                     </ul>
                 </div>
 
-                <div class="bottom-content">
+                <div class="bottom-content" onclick="window.location.href = '/logout'">
                     <i class='bx bx-log-out'></i>
                     <span class="text nav-text">
-                        <router-link to="login.html" style="text-decoration: none; color: var(--text-color);">
+                        <p>
                             Logout
-                        </router-link>
+                        </p>
                     </span>
                 </div>
             </div>
@@ -240,7 +231,7 @@ Vue.component('navbar', {
                 <input type="text" placeholder="Pesquisar...">
             </div>
             <div class="user">
-                <p class="nome">Mikael Moreira</p>
+                <p class="nome">{{ this.$root.getFirstName() }}  {{ this.$root.getLastName() }}</p>
                 <!-- <div class="photo"></div> -->
                 <div class="notifications">
                     <i class="fa-regular fa-bell"></i>
@@ -254,7 +245,7 @@ Vue.component('navbar', {
             default : 0,
             required: false,
         },
-    }
+    },
 });
 
 Vue.component('file-icon', {

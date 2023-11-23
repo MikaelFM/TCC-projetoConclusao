@@ -11,12 +11,7 @@ body {
 
 button:not(#app button) {
     font-family: "Montserrat", sans-serif;
-    border: 1.5px solid black;
     border-radius: 40px;
-    width: 65%;
-    height: 60%;
-    padding: 0 1vw;
-    font-size: 0.75vw;
     transition: all 0.1s;
     cursor: pointer;
 }
@@ -27,6 +22,7 @@ button:not(#app button) {
   align-items: center;
   justify-content: center;
   height: 3.5vw;
+  gap: 1vw
 }
 .flex-buttons {
     flex-direction: row;

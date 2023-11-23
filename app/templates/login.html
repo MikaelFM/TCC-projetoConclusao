@@ -35,11 +35,15 @@
         </div>
         <div class="control double-checkbox" style="height: 2vw">
             <div class="check-box">
-                <input type="checkbox" id="remember-me">
+                <input
+                        type="checkbox"
+                        id="remember-me"
+                        v-model="remember"
+                >
                 <label for="remember-me">Lembrar de mim</label>
             </div>
             <div class="error">
-                <p>[[msgError]]</p>
+                <p>{{msgError}}</p>
             </div>
         </div>
         <div class="control">

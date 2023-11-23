@@ -1,33 +1,33 @@
 <section id="el-main">
-    {% if token != 'expirado': %}
+    [% if token != 'expirado': %]
         <div v-if="!corrigir">
             <div v-if="!sented">
                 <h1>Confirme seu E-mail</h1>
-                <p>Um link de confirmação será enviado para <b>{{email}}</b>. Por favor, verifique sua caixa de entrada e siga o link para confirmar seu endereço de e-mail. O link é válido por 1 hora.</p>
+                <p>Um link de confirmação será enviado para <b>[[email]]</b>. Por favor, verifique sua caixa de entrada e siga o link para confirmar seu endereço de e-mail. O link é válido por 1 hora.</p>
                 <button
                         @click="sendEmail('/sendConfirmation')"
                         :class="['input', 'button', { 'disabled': buttonDisabled }]"
                         :disabled="buttonDisabled" class="input button"
                 >
-                    [[txtButton]]
+                    {{txtButton}}
                 </button>
             </div>
             <div v-else>
                 <h1>Verifique sua Caixa de Entrada</h1>
-                <p>Um link de confirmação foi enviado para <b>{{email}}</b>. Por favor, verifique sua caixa de entrada e siga o link para confirmar seu endereço de e-mail. O link é válido por 1 hora.</p>
+                <p>Um link de confirmação foi enviado para <b>[[email]]</b>. Por favor, verifique sua caixa de entrada e siga o link para confirmar seu endereço de e-mail. O link é válido por 1 hora.</p>
                 <button
                         @click="sendEmail('/sendConfirmation')"
                         :class="['input', 'button', { 'disabled': buttonDisabled }]"
                         :disabled="buttonDisabled"
                 >
-                    [[txtButton]]
+                    {{txtButton}}
                 </button>
                 <span
                         id="timer"
                         @click="timerActivate()"
                         v-if="time < 60"
                 >
-                    00:[[time.toString().padStart(2, '0')]]
+                    00:{{time.toString().padStart(2, '0')}}
                 </span>
             </div>
             <a href="#" @click="setCorrigir()">Este não é o meu E-mail / O E-mail está incorreto</a>
@@ -57,7 +57,7 @@
                 <input type="submit" value="Confirmar">
             </div>
         </form>
-    {% elif token == 'expirado': %}
+    [% elif token == 'expirado': %]
         <form id="corrigir" method="post" action="/sendRecovery" v-else>
             <h1>Digite seu E-mail</h1>
             <p>Por favor, corrija seu e-mail, digitando-o corretamente</p>
@@ -83,13 +83,13 @@
                 <input type="submit" value="Confirmar">
             </div>
         </form>
-    {% endif %}
+    [% endif %]
 </section>
-{% if token == 'expirado': %}
+[% if token == 'expirado': %]
     <div class="alert" role="alert">
         Token expirado, por favor, repita o processo
     </div>
-{% endif %}
+[% endif %]
 <script>
-    const email = '{{email}}';
+    const email = '[[email]]';
 </script>

@@ -4,7 +4,7 @@
             <h1>Servidores</h1>
         </div>
         <div class="button-new">
-            <button class="novo button">Novo Funcionário</button>
+            <button class="novo button" @click="$root.formServidores()">Novo Funcionário</button>
         </div>
     </div>
     <div class="filters">
@@ -31,37 +31,22 @@
         </div>
     </div>
     <div class="pessoas">
-        <div class="card">
+        <div class="card" v-for="(servidor) in this.$root.dados.servidores">
+            <button class="options" @click="$root.openMenuEditServidores">
+                <svg viewBox="0 0 20 20" focusable="false" width="1vw" height="1vw">
+                    <path d="M10 6c.82 0 1.5-.68 1.5-1.5S10.82 3 10 3s-1.5.67-1.5 1.5S9.18 6 10 6zm0 5.5c.82 0 1.5-.68 1.5-1.5s-.68-1.5-1.5-1.5-1.5.68-1.5 1.5.68 1.5 1.5 1.5zm0 5.5c.82 0 1.5-.67 1.5-1.5 0-.82-.68-1.5-1.5-1.5s-1.5.68-1.5 1.5c0 .83.68 1.5 1.5 1.5z"></path>
+                </svg>
+            </button>
             <div class="img-container">
                 <img src="profile-img-1.png" />
             </div>
-            <h3>Mikael Fernandes Moreira</h3>
-            <p class="cargo">Fundador</p>
-            <p class="data-admissao">Data de Amissão: 20/08/2004</p>
-        </div>
-        <div class="card">
-            <div class="img-container">
-                <img src="profile-img-1.png" />
+            <h3>{{servidor.nome}}</h3>
+            <p class="cargo">{{servidor.cargo}}</p>
+            <p class="data-admissao">Data de Amissão: {{$root.formatarDataHora(servidor.data_admissao, 'DD/MM/YYYY')}}</p>
+            <div class="edit-content hidden">
+                <button class="action" @click="$root.formServidores(servidor.id)">Editar</button>
+                <button class="action">Excluir</button>
             </div>
-            <h3>Mikael Fernandes Moreira</h3>
-            <p class="cargo">Fundador</p>
-            <p class="data-admissao">Data de Amissão: 20/08/2004</p>
-        </div>
-        <div class="card">
-            <div class="img-container">
-                <img src="profile-img-1.png" />
-            </div>
-            <h3>Mikael Fernandes Moreira</h3>
-            <p class="cargo">Fundador</p>
-            <p class="data-admissao">Data de Amissão: 20/08/2004</p>
-        </div>
-        <div class="card">
-            <div class="img-container">
-                <img src="profile-img-1.png" />
-            </div>
-            <h3>Mikael Fernandes Moreira</h3>
-            <p class="cargo">Fundador</p>
-            <p class="data-admissao">Data de Amissão: 20/08/2004</p>
         </div>
     </div>
 </section>

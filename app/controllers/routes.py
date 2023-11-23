@@ -1,7 +1,11 @@
 from app import app
-from flask import Flask, request, make_response, redirect, jsonify
-from app.functions import custom_render_template as render_template, empty, get_html_main_pages
-from app.controllers import register_login
+from flask import Flask, request, make_response, redirect, jsonify, session, g, url_for
+from app.functions import custom_render_template as render_template, empty, get_html_main_pages, get_html_from
+from app.controllers import register_login, main_page, servidores
+from flask_login import login_user, logout_user
+from app.functions import email
+from flask_apscheduler import APScheduler
+import datetime
 
 
 @app.route("/login")
@@ -11,7 +15,7 @@ def login():
 
 @app.route("/loginSubmit", methods=['POST'])
 def loginSubmit():
-    return register_login.login(request.form['email'], request.form['password'])
+    return register_login.login(request.form['email'], request.form['password'], request.form['remember'])
 
 
 @app.route("/register")
@@ -29,6 +33,7 @@ def registerSubmit():
         request.form['password']
     )
 
+
 @app.route("/emailConfirmation", methods=['POST'])
 def emailConfirmation():
     return render_template("confirmation.html", title="Confirme seu e-mail", email=request.form['email'])
@@ -43,9 +48,12 @@ def passRecovery():
 def confirmation(token):
     return register_login.confirmEmail(token)
 
+
 @app.route("/recovery/<token>", methods=['GET'])
 def recovery(token):
     return register_login.recoveryPassoword(token)
+
+
 @app.route("/emailInput")
 @app.route("/emailInput", methods=['POST'])
 def emailInput():
@@ -86,18 +94,55 @@ def checkEmailExists():
         request.form['email'],
     )
 
+
 @app.route("/saveNewPass", methods=['POST'])
 def saveNewPass():
     return register_login.saveNewPassword(request.form['token'], request.form['password'])
+
 
 @app.route("/invalidToken")
 def invalidToken():
     return render_template("return_token.html", styles=["confirmation.css"])
 
+
 @app.route("/")
 def index():
-    return render_template("main/index.html")
+    if 'user_id' in session:
+        return render_template("main/index.html")
+    return redirect('/login')
+
+
+@app.route("/getDados")
+def getDados():
+    if not 'user_id' in session:
+        return redirect('/login')
+    return {'success': True, 'logado': True, 'dados': main_page.getDados()}
+
 
 @app.route("/getHTML")
-def teste():
+def getHTML():
     return get_html_main_pages()
+
+
+@app.route("/getHTML/<path>", methods=['GET'])
+def getHTMLpath(path):
+    return {'html': get_html_from(f"modals/{path}")}
+
+
+@app.route("/logout")
+def logout():
+    session.pop('user_id', None)
+    logout_user()
+    return redirect('/login')
+
+
+@app.route("/saveFuncionario", methods=['POST'])
+def saveFuncionario():
+    return servidores.salvar(request.form)
+
+
+@app.route("/enviar")
+def enviar():
+    email.programar_email("mikaelfernandesmoreira@gmail.com", "teste", "oie", datetime.datetime.now() + datetime.timedelta(minutes=1))
+    return "enviado"
+

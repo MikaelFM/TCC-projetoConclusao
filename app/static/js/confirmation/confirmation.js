@@ -1,6 +1,5 @@
 const confirmation = new Vue({
     el: '#el-main',
-    delimiters: ['[[', ']]'],
     data: {
         email: email,
         sented: false,

@@ -2,6 +2,8 @@ from app.models import TokenUsuario, FuncionarioRH
 import app.functions.email as _email
 from app.functions import empty
 from app.functions import custom_render_template as render_template
+from flask import session
+from werkzeug.security import generate_password_hash
 
 def save(nome, email, telefone, cpf, senha):
     try:
@@ -21,10 +23,14 @@ def save(nome, email, telefone, cpf, senha):
         print(e)
         return {'success': False, 'msg': e}
 
-def login(email, senha):
+def login(email, senha, remember):
     funcionario = (FuncionarioRH(email=email, senha=senha)).exists()
     if funcionario:
         if funcionario.email_confirmado == 1:
+            session.permanent = False
+            if remember == 'true':
+                session.permanent = True
+            session['user_id'] = funcionario.id
             return {'success': True, 'msg': '', 'confirmarEmail': False}
         else:
             return {'success': True, 'msg': '', 'confirmarEmail': True}
@@ -82,7 +88,7 @@ def recoveryPassoword(token):
 def saveNewPassword(token, password):
     tokenUser = TokenUsuario.query.filter_by(token=token).first()
     funcionario = FuncionarioRH.query.filter_by(id=tokenUser.user_id).first()
-    funcionario.senha = password
+    funcionario.senha = generate_password_hash(password);
     funcionario.email_confirmado = True
     funcionario.save()
     funcionario.deleteConfirmations()

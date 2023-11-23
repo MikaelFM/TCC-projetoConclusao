@@ -1,6 +1,5 @@
 const register = new Vue({
     el: '#register',
-    delimiters: ['[[', ']]'],
     data: {
         nome: '',
         cpf: '',

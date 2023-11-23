@@ -2,8 +2,8 @@
     <article id="main-content">
         <div class="title">
             <div class="text">
-                <h1>Olá, Mikael!</h1>
-                <p>01 de Agosto de 2023</p>
+                <h1>Olá, {{ this.$root.getFirstName() }}!</h1>
+                <p>{{ this.$root.getDataExtenso() }}</p>
             </div>
             <div class="button">
                 <button class="new">+</button>
@@ -12,46 +12,26 @@
         <div class="events">
             <h2>Próximos Eventos</h2>
             <div class="events-slider">
-                <div class="event">
-                    <p class="desc">Renovação de Contrato</p>
-                    <p class="name">Neymar da Silva Júnior</p>
-                    <p class="date">28/07</p>
+                <div class="event" v-for="(evento) in this.$root.dados.eventos">
+                    <p class="desc">{{evento.categoria != 1 ? evento.title : ''}}</p>
+                    <p class="name">{{evento.descricao}}</p>
+                    <p class="date">{{$root.formatarDataHora(evento.data_inicio, 'DD/MM')}}</p>
                 </div>
-                <div class="event">
-                    <p class="name">Tomar Café</p>
-                    <p class="date">02/08</p>
+                <div class="event" v-if="$root.dados.eventos.length === 0">
+                    <p class="desc">Nenhum evento</p>
+                    <p class="name">Não há eventos programados</p>
+                    <p class="date"></p>
                 </div>
             </div>
         </div>
         <div class="files">
             <h2>Arquivos Recentes</h2>
             <div class="files-box">
-                <div class="file">
+                <div class="file" v-for="(arquivo) in this.$root.dados.arquivos">
                     <file-icon></file-icon>
                     <div class="desc">
-                        <p class="date">02, Ago</p>
-                        <p class="title">Documentação de Teste</p>
-                    </div>
-                </div>
-                <div class="file">
-                    <file-icon></file-icon>
-                    <div class="desc">
-                        <p class="date">02, Ago</p>
-                        <p class="title">Documentação de Teste</p>
-                    </div>
-                </div>
-                <div class="file">
-                    <file-icon></file-icon>
-                    <div class="desc">
-                        <p class="date">02, Ago</p>
-                        <p class="title">Documentação de Teste</p>
-                    </div>
-                </div>
-                <div class="file">
-                    <file-icon></file-icon>
-                    <div class="desc">
-                        <p class="date">02, Ago</p>
-                        <p class="title">Documentação de Teste</p>
+                        <p class="date">{{$root.formatarDataHora(arquivo.data_atualizacao, 'DD, |M|')}}</p>
+                        <p class="title">{{arquivo.nome}}</p>
                     </div>
                 </div>
             </div>

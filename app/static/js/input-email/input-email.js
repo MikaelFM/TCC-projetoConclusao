@@ -1,6 +1,5 @@
 const inputEmail = new Vue({
     el: '#input-email',
-    delimiters: ['[[', ']]'],
     data: {
         email: '',
         error: false

@@ -1,6 +1,5 @@
 const recovery = new Vue({
     el: '#recovery',
-    delimiters: ['[[', ']]'],
     data: {
         email: '',
         notExists: false,

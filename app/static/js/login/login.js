@@ -1,9 +1,9 @@
 const login = new Vue({
     el: '#login',
-    delimiters: ['[[', ']]'],
     data: {
         email: '',
         password: '',
+        remember: '',
         msgError: ''
     },
     methods: {
@@ -15,7 +15,8 @@ const login = new Vue({
               url: '/loginSubmit',
               data: {
                   email: this.email,
-                  password: this.password
+                  password: this.password,
+                  remember: this.remember
               },
               success: function (response) {
                   if(!response.success){
