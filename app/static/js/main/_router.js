@@ -34,6 +34,10 @@ function initializeVueRouter() {
             template: html[key] || errorNotFound.template,
             mounted() {
                 this.$root.page = key;
+            },
+            beforeRouteLeave(to, from, next) {
+                next();
+                this.$root.closeMenu();
             }
         }
     }));

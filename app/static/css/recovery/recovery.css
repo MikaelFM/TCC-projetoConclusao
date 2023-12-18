@@ -3,23 +3,31 @@
 form {
     width: 100%;
 }
+
 form h1 {
     font-size: 1.7vw;
     margin: 0;
 }
+
 form p {
     width: 50%;
     font-size: 0.85vw;
     margin: 2vw 0 1.3vw 0;
 }
+form.sended p {
+    width: 80%;
+}
+
 .control {
     margin: 0.5vw;
 }
+
 .error {
     color: red;
     width: 100%;
     margin: 0;
 }
+
 .alert {
     position: absolute;
     font-size: 0.8vw;
@@ -29,12 +37,137 @@ form p {
     color: #721c24;
     bottom: 7vw;
 }
+
 input.disabled, input.disabled:hover {
     background-color: rgba(128, 128, 128, 0.83);
     border: none;
     cursor: auto;
 }
+
 i {
     font-size: 3vw;
     padding-bottom: 1vw;
+}
+
+div.flex-buttons.buttons {
+    width: calc(76% + 2vw);
+    justify-content: space-between;
+    gap: 1vw;
+}
+input:not([type="checkbox"]) {
+    width: 65% !important;
+}
+div.flex-buttons.buttons {
+    width: calc(65% + 2vw) !important;
+}
+.input:focus ~ .label-input,
+.input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
+    padding: 0.1vw !important;
+    top: 0.1vh !important;
+    font-size: 1.3vh !important;
+}
+.label-input {
+    left: calc((100% - 65%) / 2) !important;
+}
+@media (max-width: 1400px) {
+    form h1 {
+        font-size: 4vh !important;
+        margin: 0 !important;
+    }
+    form p {
+        font-size: 1.8vh;
+    }
+    p.error {
+        width: 65% !important;
+        text-align: left;
+        display: block;
+    }
+    .label-input {
+        left: calc((100% - 65%) / 2 + 3vh) !important;
+    }
+    .input:focus ~ .label-input,
+    .input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
+        padding: 0.1vw !important;
+        top: -0.9vh !important;
+        font-size: 1.3vh !important;
+    }
+    .fa-solid, .fas {
+        font-size: 7vh;
+    }
+    button {
+        margin: 1vh;
+    }
+    form.sended p, .alert {
+        font-size: 1.8vh;
+    }
+    form.sended button {
+        width: 20vw;
+        height: 4vh;
+    }
+}
+@media (max-width: 960px ) {
+    .label-input {
+        left: calc((100% - 65%) / 2 + 3vh) !important;
+    }
+    .input:focus ~ .label-input,
+    .input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
+        padding: 0.1vw !important;
+        top: -0.9vh !important;
+        font-size: 1.3vh !important;
+        left: calc((100% - 65%) / 2 + 2vh) !important;
+    }
+}
+@media (max-width: 555px) {
+    section{
+        width: 85% !important;
+    }
+    form h1 {
+        font-size: 3.5vh !important;
+        margin: 0 0 4vh 0 !important;
+    }
+    form.sended h1 {
+        margin-top: 4vh !important;
+    }
+    form p {
+        font-size: 1.8vh;
+        width: 80%;
+        margin-bottom: 2vh;
+    }
+    form.sended p {
+        margin-bottom: 4vh;
+    }
+    .control {
+        margin: 2vh 0 !important;
+    }
+    div.flex-buttons.buttons {
+        width: 100% !important;
+        flex-direction: column-reverse;
+        gap: 2vh;
+    }
+    .flex-buttons input.cancel   {
+        width: 100% !important;
+    }
+    .d-control {
+        height: 13vh !important;
+    }
+    input:not([type="checkbox"]), .check-box, .error p {
+        width: 100% !important;
+    }
+    .input:focus ~ .label-input,
+    .input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
+        padding: 0.1vw !important;
+        top: -0.9vh !important;
+        font-size: 1.5vh !important;
+        left: 2.5vh !important;
+    }
+    .label-input {
+        left: 2vh !important;
+    }
+    form.sended button {
+        width: 40vw;
+        height: 5vh;
+    }
+    p.error {
+        width: 100% !important;
+    }
 }

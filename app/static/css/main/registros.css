@@ -47,3 +47,41 @@ section#registros table thead tr {
 section#registros table td:last-child {
   border-right: none;
 }
+@media (orientation: portrait) {
+    section#registros .table {
+        margin-top: 4vh;
+    }
+    section#registros .title .text h1 {
+        font-size: 2.5vh;
+    }
+    section#servidores .pessoas .card .options {
+        top: 2vh;
+        right: 2vh;
+        transform: scale(500%);
+    }
+    section#registros table {
+        font-size: 3vw;
+    }
+    section#registros table thead {
+        display: none;
+    }
+    section#registros table tbody tr {
+        display: flex;
+        flex-direction: column;
+        padding: 1vh;
+    }
+    section#registros table tbody td {
+        display: flex;
+        justify-content: space-between;
+        text-align: right !important;
+    }
+    section#registros table tbody td::before {
+        content: attr(data-title) ": ";
+        font-weight: 600;
+        text-align: left;
+        width: 50%;
+    }
+    section#registros table tbody tr td {
+        border: none;
+    }
+}

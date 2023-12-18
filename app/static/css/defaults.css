@@ -42,3 +42,9 @@ button:not(#app button) {
     background-color: rgba(215, 215, 215);
     border: none;
 }
+input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
+    background-color: rgba(188, 188, 188, 0.58) !important;
+    border-color: rgba(188, 188, 188, 0.58) !important;;
+    color: black !important;;
+    cursor: default !important;;
+}

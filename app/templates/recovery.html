@@ -19,21 +19,25 @@
             </label>
         </div>
         <p class="error" v-if="notExists">Nenhuma conta com este e-mail foi encontrada</p>
-        <div class="control flex-buttons">
-            <input type="submit" class="cancel" value="Cancelar">
-            <input
-                type="submit"
-                :value="!buttonDisabled ? 'Confirmar' : 'Enviando, aguarde'"
-                :class="['input', 'button', { 'disabled': buttonDisabled }]"
-                :disabled="buttonDisabled"
-            >
+        <div class="control d-control">
+            <div class="buttons flex-buttons">
+                <input type="submit" class="cancel" value="Cancelar">
+                <input
+                    type="submit"
+                    :value="!buttonDisabled ? 'Confirmar' : 'Enviando, aguarde'"
+                    :class="['input', 'button', { 'disabled': buttonDisabled }]"
+                    :disabled="buttonDisabled"
+                >
+            </div>
         </div>
     </form>
     <div v-else>
-        <i class="fa-solid fa-envelope-open-text"></i>
-        <h1>Verifique sua Caixa de Entrada</h1>
-        <p>Enviamos um link de recuperação para você.<br> Por favor, verifique seu e-mail</p>
-        <button onclick="window.location.href = '/login'">OK</button>
+        <form class="sended" onsubmit="event.preventDefault()">
+            <i class="fa-solid fa-envelope-open-text"></i>
+            <h1>Verifique sua Caixa de Entrada</h1>
+            <p>Enviamos um link de recuperação para você.<br> Por favor, verifique seu e-mail</p>
+            <button onclick="window.location.href = '/login'">OK</button>
+        </form>
     </div>
 </section>
 [% if token == 'expirado':%]

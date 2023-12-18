@@ -47,6 +47,8 @@ section#servidores .filters .search-box #search-by select {
 section#servidores .filters .search-box input {
     width: 60vw;
     padding: 0 1vw;
+    border-radius: 4px;
+    width: 100%;
 }
 
 section#servidores .filters .search-box button {
@@ -112,8 +114,8 @@ section#servidores .pessoas {
 }
 
 section#servidores .card {
-    box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
-    border-radius: 0.6em;
+    box-shadow: 0 0 2.4vw rgba(25, 0, 58, 0.1);
+    border-radius: 0.6vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -121,17 +123,17 @@ section#servidores .card {
     cursor: pointer;
     transition: 0.3s;
     background-color: #ffffff;
-    padding: 5em 0;
+    padding: 4vw 0;
     position: relative;
 }
 
 section#servidores .card .img-container {
-    width: 8em;
-    height: 8em;
+    width: 8vw;
+    height: 8vw;
     background-color: #c2d9f391;
-    padding: 0.5em;
+    padding: 0.5vw;
     border-radius: 50%;
-    margin: 0 auto 2em auto;
+    margin: 0 auto 2vw auto;
 }
 
 section#servidores .card img {
@@ -141,15 +143,17 @@ section#servidores .card img {
 
 section#servidores .card h3 {
     font-weight: 500;
+    font-size: 1.1vw;
 }
 
 section#servidores .card p {
-    margin: 0.5em 0 0 0;
+    margin: 0.5vw 0 0 0;
 }
 
 section#servidores .card .cargo {
     text-transform: uppercase;
     font-weight: 400;
+    font-size: 0.9vw;
 }
 
 section#servidores .card .data-admissao {
@@ -168,7 +172,7 @@ section#servidores .icons {
 section#servidores .card a {
     text-decoration: none;
     color: inherit;
-    font-size: 1.4em;
+    font-size: 1.4vw;
 }
 
 /*
@@ -211,7 +215,7 @@ section#servidores .pessoas .card .edit-content {
     width: 5vw;
     top: 2vw;
     right: 0.5vw;
-    box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
+    box-shadow: 0 0 2.4vw rgba(25, 0, 58, 0.1);
     border-radius: 9px;
     padding: 0.5vw 0;
 }
@@ -220,7 +224,7 @@ section#servidores .pessoas .card .edit-content .action {
     border: none;
     padding: 0.4vw 0;
     background: none;
-    font-size: 0.7vw;
+    font-size: 0.8vw;
     font-weight: 400;
 }
 section#servidores .pessoas .card .edit-content .action:hover {
@@ -228,4 +232,57 @@ section#servidores .pessoas .card .edit-content .action:hover {
 }
 section#servidores .pessoas .card .edit-content.hidden {
     display: none;
+}
+@media (orientation: portrait) {
+    section#servidores .title .text h1 {
+        font-size: 3vh;
+    }
+    section#servidores .button {
+        font-size: 1.6vh;
+        padding: 1vh 2vh;
+    }
+    section#servidores .card {
+        padding: 6vh 0;
+    }
+    section#servidores .filters {
+        display: none;
+    }
+    section#servidores .card .img-container {
+        width: 13vh;
+        height: 13vh;
+        margin-bottom: 2vh;
+    }
+    section#servidores .pessoas {
+        margin-top: 5vh;
+        grid-template-columns: 1fr;
+    }
+    section#servidores .card h3 {
+        font-size: 2vh;
+    }
+    section#servidores .card .cargo {
+        font-size: 1.5vh;
+    }
+    section#servidores .card .data-admissao {
+        font-size: 1.2vh;
+    }
+    section#servidores .pessoas .card .options {
+        top: 2vh;
+        right: 2vh;
+        transform: scale(300%);
+    }
+    section#servidores .pessoas .card .edit-content .action {
+        font-size: 1.6vh;
+        padding: 1vh 0;
+    }
+    section#servidores .pessoas .card .edit-content {
+        width: 13vh;
+        padding: 1vh 0;
+    }
+    @media (max-width: 470px) {
+        section#servidores .pessoas .card .options {
+            top: 2vh;
+            right: 2vh;
+            transform: scale(500%);
+        }
+    }
 }

@@ -1,5 +1,5 @@
  <section id="return_token">
-    <div>
+    <form onsubmit="event.preventDefault()">
         [% if response == "invalid" or (response == "used" and type == "password"): %]
             <h1>Token Inválido</h1>
             <p>O token solicitado é inválido. Por favor, repita o processo de geração do mesmo.</p>
@@ -17,5 +17,5 @@
         >
             Ir para a página de Login
         </button>
-    </div>
+    </form>
 </section>

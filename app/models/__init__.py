@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import aliased
 
-from app import db, login_manager
+from app import db, login_manager, scheduler
 from sqlalchemy import ForeignKey, text
 from app.functions import execute, empty, generate_token, serialize_values
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,14 +17,10 @@ def get_user(user_id):
 
 class FuncionarioRH(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nome = db.Column(db.String(30))
-    email = db.Column(db.String(20))
-    telefone = db.Column(db.Integer)
-    cpf = db.Column(db.Integer)
-    senha = db.Column(db.String(110))
-    foto = db.Column(db.Text)
-    email_confirmado = db.Column(db.Boolean, default=False)
+    login_padrao = db.Column(db.String(258))
+    senha_padrao = db.Column(db.String(110))
 
+    # comentar
     def getRepetido(self):
         repetidos = []
         dados = execute(f"""
@@ -46,6 +42,7 @@ class FuncionarioRH(db.Model, UserMixin):
     def deleteConfirmations(self):
         return execute(f"""DELETE FROM teste.token_usuario WHERE user_id = {self.id} AND action = 'tokenUser'""")
 
+    #comentar
     def deleteRecoveries(self):
         return execute(f"""DELETE FROM teste.token_usuario WHERE user_id = {self.id} AND action = 'passwordRecovery'""")
 
@@ -54,8 +51,10 @@ class FuncionarioRH(db.Model, UserMixin):
         return not empty(funcionario)
 
     def exists(self):
-        funcionario = self.query.filter_by(email=self.email).first()
-        senha_correta = check_password_hash(funcionario.senha, self.senha)
+        funcionario = self.query.filter_by(login_padrao=self.login_padrao).first()
+        if funcionario is None:
+            return False
+        senha_correta = check_password_hash(funcionario.senha_padrao, self.senha_padrao)
         if not empty(funcionario) and senha_correta:
             return funcionario
         else:
@@ -134,16 +133,16 @@ class TiposServidores(db.Model):
 
 class Servidor(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nome = db.Column(db.String(30))
-    email = db.Column(db.String(20))
-    telefone = db.Column(db.Integer)
-    cpf = db.Column(db.Integer)
+    nome = db.Column(db.String(85))
+    email = db.Column(db.String(256))
+    telefone = db.Column(db.String(11))
+    cpf = db.Column(db.String(11))
     data_admissao = db.Column(db.DateTime)
     data_criacao = db.Column(db.DateTime)
-    cargo = db.Column(db.String(20))
+    cargo = db.Column(db.String(40))
     foto = db.Column(db.Text)
     id_tipo = db.Column(db.Integer, ForeignKey('tipos_servidores.id'))
-
+    email_confirmado = db.Column(db.Boolean, default=False)
     def __init__(self, id, nome, email, telefone, cpf, data_admissao, cargo, foto, id_tipo):
         self.id = id
         self.nome = nome
@@ -158,6 +157,29 @@ class Servidor(db.Model):
     @staticmethod
     def getServidores():
         return execute("SELECT s.* FROM servidor s")
+
+    def getRepetido(self):
+        repetidos = []
+        id = self.id if self.id is not None else 0
+        dados = execute(f"""
+            SELECT 
+                cpf = '{self.cpf}' as 'CPF',
+                telefone = '{self.telefone}' as 'Telefone',
+                email = '{self.email}' as 'E-mail'
+            FROM teste.servidor 
+            WHERE 
+                (
+                    cpf = '{self.cpf}' or 
+                    telefone = '{self.telefone}' or 
+                    email = '{self.email}'
+                )   and 
+                id != {id}
+                """)
+        if not empty(dados):
+            for key, value in (dados[0]).items():
+                if value == 1:
+                    repetidos.append(key)
+        return repetidos
     def save(self):
         try:
             if self.id is None:
@@ -188,17 +210,20 @@ class Servidor(db.Model):
 
 class EmailProgramado(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    destinatario = db.Column(db.String(30))
-    data_hora_envio = db.Column(db.DateTime)
-    assunto = db.Column(db.String(100))
-    texto = db.Column(db.Text)
-    enviado = db.Column(db.Boolean)
+    id_destinatario = db.Column(db.Integer, db.ForeignKey('servidor.id'))
+    data_hora_envio = db.Column(db.DateTime, nullable=True)
+    assunto = db.Column(db.String(100), nullable=True)
+    texto = db.Column(db.Text, nullable=True)
+    enviado = db.Column(db.Boolean, nullable=True)
+    evento_vinculado = db.Column(db.Integer, db.ForeignKey('eventos.id'))
 
-    def __init__(self, destinatario, data_hora_envio, assunto, texto, enviado=False):
-        self.destinatario = destinatario
+    def __init__(self, id, id_destinatario, data_hora_envio, assunto, texto, evento_vinculado, enviado=False):
+        self.id = id
+        self.id_destinatario = id_destinatario
         self.data_hora_envio = data_hora_envio
         self.assunto = assunto
         self.texto = texto
+        self.evento_vinculado = evento_vinculado
         self.enviado = enviado
 
     def save(self):
@@ -227,7 +252,22 @@ class EmailProgramado(db.Model):
 
     @staticmethod
     def getProgramacaoEmails():
-        return execute("SELECT * FROM email_programado")
+        return execute(
+            "SELECT e.*, s.email as email_destinatario "
+            "FROM email_programado e "
+            "LEFT JOIN servidor s "
+            "ON s.id = e.id_destinatario"
+        )
+
+    @staticmethod
+    def getRegistros():
+        return execute(
+            "SELECT e.*, CAST(e.data_hora_envio AS CHAR) as data_hora_envio, s.email as email_destinatario, s.nome as nome_destinatario, ev.descricao "
+            "FROM email_programado e "
+            "LEFT JOIN servidor s ON s.id = e.id_destinatario "
+            "LEFT JOIN eventos ev ON ev.id = e.evento_vinculado "
+            "WHERE enviado = 1"
+        )
 
     def __repr__(self):
         return '<EmailProgramado %r>' % self.id
@@ -235,16 +275,20 @@ class EmailProgramado(db.Model):
 
 class Eventos(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    data_inicio = db.Column(db.Date)
-    hora_inicio = db.Column(db.Time)
-    data_fim = db.Column(db.Date)
-    hora_fim = db.Column(db.Time)
+    data = db.Column(db.Date)
     descricao = db.Column(db.String(50))
     categoria = db.Column(db.Integer, db.ForeignKey('categoria_eventos.id'))
-    funcionario_responsavel = db.Column(db.Integer, db.ForeignKey('funcionario_rh.id'))
     servidor_responsavel = db.Column(db.Integer, db.ForeignKey('servidor.id'))
-    id_programacao_email = db.Column(db.Integer, db.ForeignKey('email_programado.id'))
     privacidade = db.Column(db.Integer, db.ForeignKey('privacidade_tipos.id'))
+
+    def __init__(self, id, data, descricao, categoria, funcionario_responsavel, servidor_responsavel, privacidade):
+        self.id = id
+        self.data = data
+        self.descricao = descricao
+        self.categoria = categoria
+        self.funcionario_responsavel = funcionario_responsavel
+        self.servidor_responsavel = servidor_responsavel
+        self.privacidade = privacidade
 
     def save(self):
         try:
@@ -253,12 +297,12 @@ class Eventos(db.Model):
                 db.session.commit()
                 return self.id
             else:
-                funcionario = self.query.get(self.id)
-                if funcionario:
+                this = self.query.get(self.id)
+                if this:
                     campos = self.__dict__
                     for campo, valor in campos.items():
-                        if campo != 'id' and campo != '_sa_instance_state' and hasattr(funcionario, campo):
-                            setattr(funcionario, campo, valor)
+                        if campo != 'id' and campo != '_sa_instance_state' and hasattr(this, campo):
+                            setattr(this, campo, valor)
                             continue
                     db.session.commit()
                     return self.id
@@ -273,23 +317,23 @@ class Eventos(db.Model):
     @staticmethod
     def getEventos():
         return execute(f"""
-            SELECT e.*, fr.nome as nome_funcionario, s.nome as nome_servidor, e.descricao, ce.descricao as title
+            SELECT e.*, s.nome as nome_servidor, e.descricao, ce.descricao as title,
+            CONCAT(CAST(e.data AS CHAR), ' 00:00') as data,
+            (SELECT COALESCE((count(*) > 0), 0) FROM email_programado WHERE evento_vinculado = e.id) as has_vinculo
             FROM eventos e 
-            LEFT JOIN funcionario_rh fr ON e.funcionario_responsavel = fr.id 
             LEFT JOIN servidor s ON e.servidor_responsavel = s.id 
             LEFT JOIN categoria_eventos ce ON e.categoria = ce.id
-            WHERE (e.funcionario_responsavel = :user_id OR e.privacidade = 1) AND e.data_inicio >= now()
-            ORDER BY data_inicio ASC
+            WHERE (e.servidor_responsavel = :user_id OR e.privacidade = 1)
+            ORDER BY data ASC
             """, {"user_id": session['user_id']})
 
 
 
 class TokenUsuario(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, ForeignKey('funcionario_rh.id'))
+    user_id = db.Column(db.Integer, ForeignKey('servidor.id'))
     token = db.Column(db.String(255))
     timestamp = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
-    action = db.Column(db.String(20))
 
     def __init__(self, user_id, token, action):
         self.user_id = user_id
@@ -326,7 +370,7 @@ class TokenUsuario(db.Model):
                     SELECT user.*,
                     TIMESTAMPDIFF (MINUTE, t.timestamp, now()) >= 60 as expirado
                     FROM token_usuario t
-                    LEFT JOIN funcionario_rh user ON user.id = t.user_id
+                    LEFT JOIN servidor user ON user.id = t.user_id
                     WHERE t.token = '{token}' AND t.action = '{action}'
                     """)
 
@@ -341,34 +385,36 @@ class TokenUsuario(db.Model):
     def __repr__(self):
         return '<TokenUsuario %r>' % self.id
 
-class Registros(db.Model):
+class Arquivos(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descricao = db.Column(db.String(100))
-    destinatario = db.Column(db.Integer, db.ForeignKey('servidor.id'))
-    data_envio = db.Column(db.DateTime, default=datetime.utcnow)
-    servidor = db.relationship('Servidor', backref=db.backref('registros', lazy=True))
+    arquivo = db.Column(db.LargeBinary)
+    nome = db.Column(db.String(20))
+    tipo = db.Column(db.String(10))
+    tamanho = db.Column(db.Float)
+    data_atualizacao = db.Column(db.DateTime, default=datetime.now)
+    inserido_por = db.Column(db.Integer, db.ForeignKey('servidor.id'))
 
-    def __init__(self, descricao, destinatario, data_envio=None):
-        self.descricao = descricao
-        self.destinatario = destinatario
-        if data_envio is None:
-            data_envio = datetime.utcnow()
-        self.data_envio = data_envio
+    def __init__(self, id, nome, arquivo, tipo, tamanho, inserido_por):
+        self.id = id
+        self.nome = nome
+        self.arquivo = arquivo
+        self.tipo = tipo
+        self.tamanho = tamanho
+        self.inserido_por = inserido_por
 
     def save(self):
-        self.senha = generate_password_hash(self.senha)
         try:
             if self.id is None:
                 db.session.add(self)
                 db.session.commit()
                 return self.id
             else:
-                funcionario = self.query.get(self.id)
-                if funcionario:
+                this = self.query.get(self.id)
+                if this:
                     campos = self.__dict__
                     for campo, valor in campos.items():
-                        if campo != 'id' and campo != '_sa_instance_state' and hasattr(funcionario, campo):
-                            setattr(funcionario, campo, valor)
+                        if campo != 'id' and campo != '_sa_instance_state' and hasattr(this, campo):
+                            setattr(this, campo, valor)
                             continue
                     db.session.commit()
                     return self.id
@@ -381,40 +427,12 @@ class Registros(db.Model):
             return None
 
     @staticmethod
-    def getRegistros():
-        return execute("SELECT r.*, s.nome, s.email FROM registros r LEFT JOIN servidor s ON s.id = r.destinatario")
-    def __repr__(self):
-        return f"Registro(id={self.id}, descricao={self.descricao}, destinatario={self.destinatario}, data_envio={self.data_envio})"
-
-class Arquivos(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    arquivo = db.Column(db.LargeBinary)
-    nome = db.Column(db.String(20))
-    tipo = db.Column(db.String(10))
-    tamanho = db.Column(db.Float)
-    data_atualizacao = db.Column(db.DateTime, default=datetime.utcnow)
-    privacidade = db.Column(db.Integer, db.ForeignKey('privacidade_tipos.id'))
-    inserido_por = db.Column(db.Integer, db.ForeignKey('funcionario_rh.id'))
-    funcionario_rh = db.relationship('FuncionarioRH', backref=db.backref('arquivos', lazy=True))
-
-    def save(self):
-        try:
-            if self.id is None:
-                db.session.add(self)
-            db.session.commit()
-            return self.id
-        except Exception as e:
-            print(e)
-            db.session.rollback()
-            return None
-
-    @staticmethod
     def getArquivos():
         return execute(f"""
-            SELECT a.*, f.nome as responsavel, f.email 
+            SELECT a.*, CAST(arquivo AS CHAR) AS arquivo, CAST(data_atualizacao AS CHAR) AS data_atualizacao
             FROM arquivos a 
-            LEFT JOIN funcionario_rh f ON f.id = a.inserido_por
-            WHERE a.inserido_por = :user_id OR a.privacidade > 0
+            LEFT JOIN servidor s ON s.id = a.inserido_por
+            WHERE a.inserido_por IS NULL
             """, {"user_id": session['user_id']})
 
     def __repr__(self):
@@ -424,7 +442,7 @@ class CategoriaEventos(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descricao = db.Column(db.String(30))
     arquivo_base_envio = db.Column(db.LargeBinary)
-    cor_base = db.Column(db.String(15))
+    texto_envio = db.Text()
     def save(self):
         try:
             if self.id is None:
@@ -448,8 +466,21 @@ class PrivacidadeTipos(db.Model):
         try:
             if self.id is None:
                 db.session.add(self)
-            db.session.commit()
-            return self.id
+                db.session.commit()
+                return self.id
+            else:
+                this = self.query.get(self.id)
+                if this:
+                    campos = self.__dict__
+                    for campo, valor in campos.items():
+                        if campo != 'id' and campo != '_sa_instance_state' and hasattr(this, campo):
+                            setattr(this, campo, valor)
+                            continue
+                    db.session.commit()
+                    return self.id
+                else:
+                    print("Registro não encontrado no banco de dados.")
+                    return False
         except Exception as e:
             print(e)
             db.session.rollback()
@@ -459,3 +490,37 @@ class PrivacidadeTipos(db.Model):
     def getPrivacidadeTipos():
         return execute("SELECT * FROM privacidade_tipos")
 
+
+class ServidorEvento(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_evento = db.Column(db.Integer, db.ForeignKey('eventos.id'))
+    id_servidor = db.Column(db.Integer, db.ForeignKey('servidor.id'))
+
+    def __init__(self, id, id_evento, id_servidor):
+        self.id = id
+        self.id_evento = id_evento
+        self.id_servidor = id_servidor
+
+    def save(self):
+        try:
+            if self.id is None:
+                db.session.add(self)
+                db.session.commit()
+                return self.id
+            else:
+                this = self.query.get(self.id)
+                if this:
+                    campos = self.__dict__
+                    for campo, valor in campos.items():
+                        if campo != 'id' and campo != '_sa_instance_state' and hasattr(this, campo):
+                            setattr(this, campo, valor)
+                            continue
+                    db.session.commit()
+                    return self.id
+                else:
+                    print("Registro não encontrado no banco de dados.")
+                    return False
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            return None

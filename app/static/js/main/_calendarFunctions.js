@@ -9,7 +9,7 @@ const getArrayDatasMes = (mes, ano, dias_mes = 42) => {
 const getArrayDatasAno = (ano) => {
     let array = [];
     for(mes = 0; mes < 12; mes++){
-        array.push(getArrayDatasMes(mes, ano, 35))
+        array.push(getArrayDatasMes(mes, ano, 42))
     }
     return array;
 };
@@ -59,6 +59,10 @@ const getCalendarMethods = () => {
         isSelected(data) {
             return this.getDataFormatada(data) === this.dataSelected;
         },
+        getEventsDay: function (date) {
+            let indexData = this.$root.formatarDataHora(date, 'DD/MM/YYYY')
+            return this.dateEvents[indexData] ?? [];
+        },
     }
 };
 
@@ -103,13 +107,13 @@ const calendarBase = {
             </div>
             <div class="dias">
                 <div
-                    class="dia"
+                    class="dia from-home"
                     v-for="(item, key) in arrayDatas"
-                    :class="{'gray' : item.getMonth() !== getMes(), 'hoje': isDataAtual(item), 'selected': isSelected(item)}"
-                    @click="selectData(key)"
+                    :class="{'gray' : item.getMonth() !== getMes(), 'hoje': isDataAtual(item), 'selected': isSelected(item), 'with-events' : getEventsDay(item).length > 0}"
+                    @click="$root.openModalEventsList(item, true).stop"
                     :key="key"
                 >
-                    <p>
+                    <p class="from-home-p">
                         {{ item.getDate() }}
                     </p>
                 </div>
@@ -123,5 +127,13 @@ const calendarBase = {
     mounted() {
         this.arrayDatas = getArrayDatasMes(this.getMes(), this.getAno(), this.quantidadeDias);
     },
-    methods: getCalendarMethods()
+    methods: getCalendarMethods(),
+    computed: {
+        arrayAno: function(){
+            return getArrayDatasAno(this.calendarioAno)
+        },
+        dateEvents: function () {
+            return this.$root.eventsList
+        }
+    },
 }

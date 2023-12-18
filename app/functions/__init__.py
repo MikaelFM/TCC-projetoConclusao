@@ -1,9 +1,9 @@
 import os
-from app import app
+import re
+
+from app import app, db
 import random
-from flask import Flask, render_template, request, make_response, redirect, jsonify
-from sqlalchemy import ForeignKey, text
-from app import db
+from flask import render_template
 
 
 def custom_render_template(page, **var):
@@ -24,6 +24,7 @@ def custom_render_template(page, **var):
 
 
 from sqlalchemy import text
+
 
 def execute(sql, params=None, session=None):
     with app.app_context():
@@ -61,9 +62,11 @@ def execute(sql, params=None, session=None):
 def empty(object):
     return object == [] or object is None or object == ''
 
+
 def generate_token():
     token = ''.join(random.choice('0123456789ABCDEF') for i in range(16))
     return token
+
 
 def get_html_from(path):
     base_url = "app/templates/"
@@ -76,6 +79,7 @@ def get_html_from(path):
     except Exception as e:
         return f"Ocorreu um erro: {e}"
 
+
 def get_html_main_pages():
     return {
         'agenda': get_html_from("main/agenda.html"),
@@ -86,6 +90,7 @@ def get_html_main_pages():
         'servidores': get_html_from("main/servidores.html")
     }
 
+
 def serialize_values(values):
     if values is None:
         return None
@@ -94,3 +99,6 @@ def serialize_values(values):
         if not key.startswith('_'):
             serialized_user[key] = value
     return serialized_user
+
+def get_clean_number(number):
+    return re.sub(r'\D', '', number.strip())

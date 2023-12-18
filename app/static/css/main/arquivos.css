@@ -37,8 +37,9 @@ section#arquivos .filters .search-box #search-by select {
     width: 6vw;
 }
 section#arquivos .filters .search-box input {
-    width: 60vw;
+    width: 100%;
     padding: 0 1vw;
+    border-radius: 4px;
 }
 section#arquivos .filters .search-box button {
     transition: all 0.1s;
@@ -123,4 +124,60 @@ section#arquivos .bxs-file-doc, .bxs-file {
 }
 section#arquivos .icon-planilha {
     color: green;
+}
+section#arquivos .events-portrait {
+    font-family: "Poppins", sans-serif;
+    color: gray;
+}
+section#arquivos .events-portrait {
+    margin-top: 5vh;
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+}
+section#arquivos .events-portrait .event {
+    display: flex;
+    border-top: 1px solid rgba(128, 128, 128, 0.270);
+    padding: 3vh 4vw;
+    gap: 4vw;
+}
+section#arquivos .events-portrait .event p {
+    line-height: 3vh;
+}
+section#arquivos .events-portrait .event .left {
+    display: flex;
+    justify-content: center;
+    height: auto;
+}
+section#arquivos .events-portrait .event .left i {
+    font-size: 4vh;
+}
+section#arquivos .events-portrait .event .right .name {
+    font-size: 2vh;
+    color: black;
+}
+section#arquivos .events-portrait .event .right .date {
+    margin-top: 1vh;
+    font-size: 1.6vh;
+}
+section#arquivos .events-portrait .event .right .icons {
+    margin-top: 1.5vh;
+    font-size: 2.6vh;
+    display: flex;
+    gap: 3vw;
+}
+@media (orientation: portrait) {
+    section#arquivos table {
+        box-shadow: none;
+        display: none;
+    }
+    section#arquivos .title .text h1 {
+        font-size: 3vh;
+    }
+    section#arquivos .button {
+        font-size: 1.6vh;
+        padding: 1vh 2vh;
+    }
+    section#arquivos .filters {
+        display: none;
+    }
 }

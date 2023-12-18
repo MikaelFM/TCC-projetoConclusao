@@ -6,7 +6,8 @@ const confirmation = new Vue({
         buttonDisabled: false,
         time: 59,
         txtButton: `Enviar e-mail de confirmação`,
-        corrigir: false
+        corrigir: false,
+        notExists: false
     },
     methods: {
         sendEmail: function () {

@@ -38,6 +38,7 @@ section#home article#main-content .title .text p {
     color: #737373;
     font-weight: 600;
     margin-top: 0.4vw;
+    font-size: 0.9vw;
 }
 section#home article#main-content .title .button button {
     background-color: black;
@@ -49,7 +50,10 @@ section#home article#main-content .title .button button {
     height: 2.3vw;
     margin-right: 7vw;
 }
-section#home article#main-content .events, article#main-content .files {
+article#main-content .calendar-div {
+    display: none;
+}
+section#home article#main-content .events, article#main-content .files, article#main-content .calendar-div {
     margin-top: 3vw;
 }
 section#home article#main-content .events .events-slider {
@@ -68,6 +72,7 @@ section#home article#main-content .events .events-slider .event {
     color: white;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     /* border: 3px solid rgb(192, 215, 242) */
 }
 section#home article#main-content .events .events-slider .event .desc {
@@ -102,7 +107,7 @@ section#home article#main-content .files .files-box .file {
     height: 2.5vw;
     display: flex;
     font-weight: 600;
-    gap: 1vw;   
+    gap: 1vw;
 }
 section#home article#main-content .files .files-box .file:nth-child(even){
     justify-content: end;
@@ -115,7 +120,7 @@ section#home article#main-content .files .files-box .file .desc .title {
     max-width: 3vw;
     flex-wrap: wrap;
     font-size: 0.7vw;
-} 
+}
 section#home article#main-content .files .files-box .file svg {
     height: 100%;
 }
@@ -128,4 +133,100 @@ section#home article#secondary-content h2 {
 }
 section#home article#secondary-content .calendar {
     margin-top: 2.5vw;
+}
+@media (orientation: portrait) {
+    section#home article#main-content {
+        margin: 0 !important;
+    }
+    section#home article#main-content .events, article#main-content .files, article#main-content .calendar-div {
+        margin-top: 5vh;
+    }
+    section#home article#main-content .title .text h1 {
+        font-size: 2.7vh;
+    }
+    section#home article#main-content .title .text p {
+        font-size: 1.6vh;
+    }
+    section#home article#main-content h2 {
+        font-size: 2.2vh;
+    }
+    section#home article#main-content .events .events-slider {
+        height: 13vh;
+        padding: 2% 0;
+        gap: 3vw;
+    }
+    section#home article#main-content .events .events-slider .event {
+        width: 100%;
+        padding: 2vh;
+    }
+    section#home article#main-content .events .events-slider .event .desc {
+        font-size: 1.4vh;
+    }
+    section#home article#main-content .events .events-slider .event .name {
+        font-size: 1.8vh;
+    }
+    section#home article#main-content .events .events-slider .event .date {
+        font-size: 2.4vh;
+    }
+    section#home article#main-content .calendar .arrows button {
+        height: 3vh;
+        width: 6vw;
+        font-size: 2vw;
+    }
+    section#home article#main-content .files .files-box {
+        width: 100%;
+    }
+    section#home article#main-content .files .files-box .file {
+        height: 3.5vh;
+    }
+    section#home article#main-content .files .files-box .file:nth-child(2n) {
+        justify-content: start;
+    }
+    section#home article#main-content .files .files-box .file .desc .date {
+        font-size: 1.3vh;
+        max-width: max-content;
+    }
+    section#home article#main-content .files .files-box .file .desc .title {
+        font-size: 1.4vh;
+        max-width: max-content;
+    }
+    section#home article#main-content .calendar-div {
+        margin-top: 5vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    section#home article#main-content .calendar-div .calendar .head .mes-ano {
+        font-size: 1.6vh;
+    }
+    section#home article#main-content .calendar-div h2 {
+        width: 100%;
+    }
+    section#home article#main-content .calendar-div .calendar {
+        width: 100%;
+    }
+    section#home article#main-content .calendar-div .calendar .datas div {
+        font-size: 1.2vh;
+    }
+    section#home article#main-content .calendar-div .calendar .dia {
+        height: 4.5vh;
+        border-left: 0.6vw solid white;
+        border-right: 0.6vw solid white;
+        border-radius: 8px;
+    }
+    section#home article#main-content .calendar-div .calendar .head {
+        padding-left: 0;
+    }
+    section#home article#secondary-content {
+        display: none;
+    }
+    section#home article#main-content {
+        width: 100%;
+    }
+    section#home .calendar .datas .header p {
+        font-size: 1vh;
+    }
+    section#home article#main-content .files h2 {
+        margin-bottom: 3vh;
+    }
 }

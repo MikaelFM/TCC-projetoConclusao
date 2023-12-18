@@ -16,10 +16,10 @@
             </thead>
             <tbody>
                 <tr v-for="(registro, key) in this.$root.dados.registros">
-                    <td style="text-align: center;">{{key + 1}}</td>
-                    <td>{{registro.descricao}}</td>
-                    <td>{{registro.nome}} ({{registro.email}})</td>
-                    <td>{{$root.formatarDataHora(registro.data_envio, 'DD/MM/YYYY HhM')}}</td>
+                    <td style="text-align: center;" data-title="ID">{{key + 1}}</td>
+                    <td data-title="Descrição">{{registro.descricao}}</td>
+                    <td data-title="Destinatário">{{registro.nome_destinatario}} ({{registro.email_destinatario}})</td>
+                    <td data-title="Data de Envio">{{$root.formatarDataHora(registro.data_hora_envio, 'DD/MM/YYYY HhM')}}</td>
                 </tr>
             </tbody>
         </table>

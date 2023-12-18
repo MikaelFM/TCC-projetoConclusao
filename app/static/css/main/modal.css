@@ -42,14 +42,13 @@
 }
 
 #modal .btn-close {
+    z-index: 999;
     cursor: pointer;
     border: none;
     display: inline-block;
     font-weight: 400;
     text-align: center;
     font-size: 0.95em;
-    width: 2vw;
-    height: 2vw;
     padding: 0.5rem 0.7rem;
     background: #eee;
     border-radius: 50%;
@@ -151,4 +150,325 @@
 }
 #modal select:checked {
     color: red !important;
+}
+#modal.modal-confirmation {
+    width: 30vw;
+    border-radius: 10px;
+}
+#modal.modal-confirmation .top {
+    justify-content: end;
+    font-size: 0.8vw;
+}
+#modal.modal-confirmation .text {
+    width: 100%;
+    padding: 0 1vw 1.5vw 1vw;
+}
+#modal.modal-confirmation .text p {
+    font-size: 0.98vw;
+    font-weight: 400;
+    width: 100%;
+    color: black;
+}
+#modal.modal-confirmation .buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.8vw;
+    width: 100%;
+    justify-content: end;
+}
+#modal.modal-confirmation .buttons .button {
+    font-size: 0.75vw;
+    font-weight: 500;
+    padding: 0.5vw 1vw;
+    margin-bottom: 0.3vw;
+    border-radius: 5px;
+}
+#modal.modal-confirmation .buttons .btn-cancel {
+    background-color: transparent;
+    border: 1px solid rgba(128, 128, 128, 0.44);
+}
+#modal.modal-confirmation .buttons .btn-confirm {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+}
+#modal.modal-confirmation .btn-cancel:hover {
+    background-color: #eaeaea;
+}
+#modal.modal-confirmation .btn-confirm:hover {
+    background-color: rgba(0, 0, 0, 0.65);
+    border: 1px solid rgba(0, 0, 0, 0.65);
+}
+#modal.modal-event {
+    position: fixed;
+    margin: 0 auto;
+    width: 25vw;
+    border-radius: 10px;
+    box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
+}
+#modal.modal-event .top {
+    margin-top: 0.5vw;
+    justify-content: end;
+    align-items: center;
+    gap: 1vw;
+    height: 3vw;
+}
+#modal.modal-event .top button:not(.btn-close) {
+    background-color: transparent;
+}
+#modal.modal-event .top:not(.disabled) button:not(.btn-close):hover {
+    opacity: 0.5;
+}
+#modal.modal-event .top button i {
+    font-size: 1.2vw;
+    background-color: transparent;
+}
+#modal.modal-event .top.disabled button i {
+    color: rgba(128, 128, 128, 0.68);
+    cursor: not-allowed;
+}
+#modal.modal-event .body {
+    width: 100%;
+}
+#modal.modal-event .body h3 {
+    margin: 0;
+    font-size: 1.15vw;
+    text-align: left;
+    font-weight: 600;
+}
+#modal.modal-event .body p {
+    font-size: 0.8vw;
+}
+#modal.modal-events-list .top {
+    margin-top: 0.5vw;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1vw;
+    height: 3vw;
+}
+#modal.modal-events-list .top p {
+    font-size: 0.9vw;
+    color: black;
+    font-weight: 500;
+}
+#modal.modal-events-list {
+    position: absolute;
+    width: 16vw;
+    border-radius: 10px;
+    box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
+}
+#modal.modal-events-list .events {
+    width: 100%;
+}
+#modal.modal-events-list .events .event {
+    width: 100%;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+#modal.modal-events-list .events .event-none {
+    background-color: white;
+    cursor: default;
+}
+#modal.modal-events-list .events .event-none.primary {
+    background-color: var(--primary-color);
+}
+#modal.modal-events-list .events .event:not(.event-none):hover {
+    background-color: rgba(166, 190, 237, 0.57);
+}
+#modal.modal-events-list .events .event p {
+    font-size: 0.75vw;
+    padding: 0.2vw 0.5vw;
+    color: black;
+    font-weight: 400;
+    max-width: 100%;
+    word-break: break-word;
+}
+#formServidores .input.disabled {
+    color: #5d6061;
+}
+#modal .error {
+    margin-bottom: 0.5vw;
+    justify-content: start;
+}
+#modal .error p {
+  width: 75% !important;
+  color: red !important;
+  font-size: 0.65vw !important;
+  font-weight: 500 !important;
+  margin-left: 2%;
+}
+#modal .body-modal h3 {
+    display: none;
+}
+@media (max-width: 1100px){
+    #modal {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        border-radius: 0;
+    }
+    #modal .top {
+        justify-content: end;
+        height: 10vh;
+    }
+    #modal .body-modal, form {
+        width: 100%;
+    }
+    #modal .body-modal {
+        height: calc(100% + 5vh);
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: -10vh;
+    }
+    #modal .top h3 {
+        display: none;
+    }
+    #modal .body-modal h3 {
+        display: block;
+        font-size: 5vh;
+        margin: 0 0 6vh 0;
+    }
+    .control {
+        height: 5vh !important;
+        margin: 2vh;
+        width: 65%;
+    }
+    .control .control {
+        margin: 0;
+    }
+    #modal .input:not([type="checkbox"]) {
+        box-sizing: border-box;
+        height: 95% !important;
+        font-size: 1.6vh !important;
+        padding: 0 2vh;
+    }
+    #modal .label-input {
+        font-size: 1.6vh !important;
+        left: 3vh;
+    }
+    #modal .input:focus ~ .label-input,
+    #modal .input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
+        padding: 0.1vw !important;
+        left: 2.2vh;
+        top: -0.8vh !important;
+        font-size: 1.3vh !important;
+    }
+    #app #file-drop {
+        background-color: var(--primary-color);
+        border: none;
+        gap: 3vw;
+    }
+    #app #file-drop .button {
+        display: block;
+        font-size: 1.6vh;
+        text-align: center;
+        background-color: transparent;
+        padding: 0;
+    }
+    #app #file-drop .file-name {
+        font-size: 1.6vh;
+    }
+    .modal-event {
+        top: 0 !important;
+        left: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+    }
+    #modal.modal-event {
+        border-radius: 0;
+    }
+    #modal.modal-event .body h3 {
+        font-size: 2.5vh !important;
+    }
+    #modal.modal-event .body p {
+        font-size: 1.6vh !important;
+    }
+    #modal.modal-event i {
+        font-size: 2.5vh !important;
+        padding: 0.5rem 0.7rem !important;
+    }
+    #modal.modal-event .btn-close {
+        margin-left: 0.4rem;
+    }
+    #modal.modal-event .top {
+        height: 8vh !important;
+    }
+    #modal.modal-events-list .top {
+        height: 10vh;
+    }
+    #modal.modal-events-list {
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0;
+    }
+    #modal.modal-events-list .top p {
+        font-size: 2.3vh !important;
+    }
+    #modal.modal-events-list p {
+        font-size: 1.6vh !important;
+    }
+    #modal.modal-events-list .events .event p {
+        padding: 0.8vh !important;
+    }
+    #modal.modal-events-list .events {
+        margin-top: 3vh;
+    }
+}
+@media (max-width: 600px){
+    #modal {
+        padding: 0 1vw;
+    }
+    .control {
+        width: 100% !important;
+    }
+    .control-duple {
+        flex-direction: column;
+        height: 14vh !important;
+        gap: 4vh;
+    }
+    .control-duple .control {
+        width: 100% !important;
+    }
+    #modal .body-modal h3 {
+        font-size: 4vh;
+    }
+    #modal .body-modal {
+        padding: 0 4vw;
+    }
+    #modal .top {
+        justify-content: end;
+        height: 5vh !important;
+    }
+    #formServidores .control {
+        margin: 1vh;
+    }
+    #formServidores .control-duple {
+        height: 12vh !important;
+        gap: 2vh !important;
+        justify-content: space-between;
+    }
+    #formServidores .control-duple .control {
+        margin: 0;
+    }
+    .modal-event {
+        padding: 4vh !important;
+    }
+    .modal-event .body {
+        margin-top: 5vh !important;
+    }
+    #modal.modal-events-list {
+        padding: 4vh;
+    }
+    #modal.modal-event .body h3 {
+        font-size: 3vh !important;
+    }
+    #modal.modal-event .body p {
+        font-size: 2vh;
+    }
 }

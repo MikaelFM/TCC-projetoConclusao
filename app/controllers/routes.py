@@ -1,11 +1,10 @@
-from app import app
-from flask import Flask, request, make_response, redirect, jsonify, session, g, url_for
+from apscheduler.jobstores.base import JobLookupError
+
+from app import app, scheduler
+from flask import Flask, request, redirect, jsonify, session, g, url_for
 from app.functions import custom_render_template as render_template, empty, get_html_main_pages, get_html_from
-from app.controllers import register_login, main_page, servidores
-from flask_login import login_user, logout_user
-from app.functions import email
-from flask_apscheduler import APScheduler
-import datetime
+from app.controllers import register_login, main_page, servidores, eventos, arquivos
+from flask_login import logout_user
 
 
 @app.route("/login")
@@ -52,17 +51,6 @@ def confirmation(token):
 @app.route("/recovery/<token>", methods=['GET'])
 def recovery(token):
     return register_login.recoveryPassoword(token)
-
-
-@app.route("/emailInput")
-@app.route("/emailInput", methods=['POST'])
-def emailInput():
-    if request.method == 'POST':
-        return render_template("input-email.html", title="Corrija seu E-mail", styles=['/login/login.css'],
-                               oldEmail=request.form['email'])
-    else:
-        return render_template("input-email.html", title="Digite seu E-mail", styles=['/login/login.css'])
-
 
 @app.route("/corrigirEmail", methods=['POST'])
 def corrigirEmail():
@@ -139,10 +127,37 @@ def logout():
 @app.route("/saveFuncionario", methods=['POST'])
 def saveFuncionario():
     return servidores.salvar(request.form)
+@app.route("/deleteFuncionario", methods=['POST'])
+def deleteFuncionario():
+    return servidores.delete(request.form['id'])
+@app.route("/saveEvento", methods=['POST'])
+def saveEvento():
+    return eventos.salvar(request.form)
 
+@app.route("/deleteEvento", methods=['POST'])
+def deleteEvento():
+    return eventos.delete(request.form['id'])
+@app.route("/saveArquivo", methods=['POST'])
+def saveArquivo():
+    return arquivos.salvar(request.form)
 
-@app.route("/enviar")
-def enviar():
-    email.programar_email("mikaelfernandesmoreira@gmail.com", "teste", "oie", datetime.datetime.now() + datetime.timedelta(minutes=1))
-    return "enviado"
+@app.route("/deleteFile", methods=['POST'])
+def deleteFile():
+    return arquivos.delete(request.form['id'])
+@app.route("/tasks")
+def tasks():
+    try:
+        tarefas_agendadas = scheduler.get_jobs()
 
+        tasks_info = []
+        for tarefa in tarefas_agendadas:
+            task_info = {
+                "id": tarefa.id,
+                "name": tarefa.name,
+                "next_run_time": str(tarefa.next_run_time),
+            }
+            tasks_info.append(task_info)
+
+        return jsonify(tasks_info)
+    except JobLookupError as e:
+        return f"Erro ao obter informações das tarefas: {e}", 500

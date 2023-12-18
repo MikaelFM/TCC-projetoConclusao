@@ -33,7 +33,7 @@
                 Senha
             </label>
         </div>
-        <div class="control double-checkbox" style="height: 2vw">
+        <div class="control control-remember" style="height: 2vw">
             <div class="check-box">
                 <input
                         type="checkbox"
@@ -42,15 +42,18 @@
                 >
                 <label for="remember-me">Lembrar de mim</label>
             </div>
-            <div class="error">
-                <p>{{msgError}}</p>
-            </div>
+        </div>
+        <div class="error" v-if="msgError != ''">
+            <p>{{msgError}}</p>
         </div>
         <div class="control">
             <input type="submit" value="Confirmar">
         </div>
         <div class="esqueceu_senha">
             <a href="/passwordRecovery">Esqueceu a senha?</a>
+            <p class="portrait">
+                Ainda não tem conta? <a href="/register">Registre-se</a>
+            </p>
         </div>
     </form>
     <div class="box">

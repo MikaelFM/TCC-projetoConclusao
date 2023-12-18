@@ -14,6 +14,9 @@ Vue.component('calendar-agenda', {
                             <button class="front" @click="pass()">></button> 
                         </div>
                         <div class="date">
+                            <div class="text">
+                                <h1>Agenda</h1>
+                            </div>
                             <p class="mes" v-if="isMesView()">{{ meses[getMes()] }} {{ getAno() }}</p>
                             <p class="mes" v-if="isAnoView()">{{ calendarioAno }}</p>
                         </div>
@@ -23,7 +26,7 @@ Vue.component('calendar-agenda', {
                                 <option value="ano-active">Ano</option>
                                 <option value="programacao-active">Programação</option>
                             </select>
-                            <button class="button novo">Novo Evento</button>
+                            <button class="button novo" @click="$root.formEventos()">Novo Evento</button>
                         </div>
                     </div>
                     <div class="mes-header" v-if="isMesView()">
@@ -38,9 +41,15 @@ Vue.component('calendar-agenda', {
                 </div>
                 <div class="agenda">
                     <div class="mes-view" v-if="isMesView()">
-                        <div class="dia" v-for="(item, key) in arrayDatas">
-                            <p class="numero-dia">{{item.getDate()}}</p>
-                            <div class="event" v-for="(evento) in getEventsDay(item)">{{evento.descricao}}</div>
+                        <div class="dia" v-for="(item, key) in arrayDatas" @click="$root.formEventos(null, item)">
+                            <p class="numero-dia" :class="{'gray' : item.getMonth() !== getMes()}">{{item.getDate()}}</p>
+                            <div v-if="getEventsDay(item).length <= 2">
+                                <div class="event" v-for="(evento) in getEventsDay(item)" @click="$root.openModalEvents(evento.id)">{{evento.descricao}}</div>
+                            </div>
+                            <div v-else>
+                                <div class="event" @click="$root.openModalEvents(getEventsDay(item)[0])">{{(getEventsDay(item)[0]).descricao}}</div>
+                                <div class="event button from-button-day" @click="$root.openModalEventsList(item)">Mais {{getEventsDay(item).length - 1}}</div>
+                            </div>
                         </div>
                     </div>
                     <div class="ano-view" v-if="isAnoView()">
@@ -70,8 +79,15 @@ Vue.component('calendar-agenda', {
                                 <div class="dia">
                                     <p class="numero name">S</p>
                                 </div>
-                                <div class="dia" v-for="dia in mes">
-                                    <p class="numero">{{dia.getDate()}}</p>
+                                <div class="dia from-ano-view" v-for="dia in mes" :class="{'with-events' : getEventsDay(dia).length > 0 && dia.getMonth() === key}" @click="$root.openModalEventsList(dia)">
+                                    <div class="dia-background">
+                                        <p 
+                                            class="numero" 
+                                            :class="{'gray' : dia.getMonth() !== key}"
+                                        >
+                                            {{dia.getDate()}}
+                                        </p>             
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -80,10 +96,12 @@ Vue.component('calendar-agenda', {
                         <div class="evento" v-for="(diaEvento, key) in dateEvents">
                             <div class="flex">
                                 <p class="dia-numero">{{key.split('/')[0]}}</p>
-                                <p class="detalhe">{{meses[parseInt(key.split('/')[1])]}}/{{key.split('/')[2]}} - {{getDiaDaSemana(diaEvento)}}</p>     
+                                <p class="detalhe">{{meses[parseInt(key.split('/')[1]) - 1]}}/{{key.split('/')[2]}} - {{getDiaDaSemana(diaEvento)}}</p>     
                             </div>
                             <ul class="eventos" v-for="(evento) in diaEvento">
-                                <li>{{evento.title != 'Personalizado' ? evento.title + ' - ' : '' }} {{evento.descricao}}</li>
+                                <li>
+                                    <p class="from-programacao-view" @click="$root.openModalEvents(evento.id)">{{evento.title != 'Personalizado' ? evento.title + ' - ' : '' }} {{evento.descricao}}</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -94,17 +112,9 @@ Vue.component('calendar-agenda', {
              ...getCalendarData(),
              dataSelected: '2023-08-01',
              modelo: 'mes-active',
-             quantidadeDias: 35,
+             quantidadeDias: 42,
              calendarioAno: (new Date()).getFullYear()
          };
-    },
-    computed: {
-        arrayAno: function(){
-            return getArrayDatasAno(this.calendarioAno)
-        },
-        dateEvents: function () {
-            return this.$root.eventsList
-        }
     },
     methods: Object.assign({}, getCalendarMethods(), {
         hoje: function(){
@@ -147,21 +157,23 @@ Vue.component('calendar-agenda', {
         isProgramacaoView: function(){
             return this.modelo === 'programacao-active'
         },
-        getEventsDay: function (date) {
-            let indexData = this.$root.formatarDataHora(date, 'DD/MM/YYYY')
-            return this.dateEvents[indexData];
-        },
         getDiaDaSemana(date){
-            let data = new Date(date[0]['data_inicio'])
+            let data = new Date(date[0]['data'])
             let diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
             return diasDaSemana[data.getDay()]
         }
-    })
+    }),
+    mounted(){
+        let vue_self = this;
+        if (vue_self.$root.isPortrait()){
+            vue_self.modelo = 'programacao-active'
+        }
+    }
 });
 
 Vue.component('navbar', {
     template: `
-    <div>
+    <div> 
         <nav class="sidebar">
             <header>
                 <div class="image-text">
@@ -173,6 +185,7 @@ Vue.component('navbar', {
             </header>
 
             <div class="menu-bar">
+                <button class='bx bxs-x-circle close-button' @click="$root.closeMenu()"></button>
                 <div class="menu">
                     <ul class="menu-links">
                         <li class="nav-link"   :class="{'selected' : this.$root.page == 'home'}">
@@ -226,13 +239,14 @@ Vue.component('navbar', {
         </nav>
 
         <nav class="navbar">
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Pesquisar...">
-            </div>
+<!--            <div class="search-box">-->
+<!--                <i class="fa-solid fa-magnifying-glass"></i>-->
+<!--                <input type="text" placeholder="Pesquisar...">-->
+<!--            </div>-->
+            <button @click="$root.openMenu()" class='bx bx-menu-alt-left'></button>
             <div class="user">
-                <p class="nome">{{ this.$root.getFirstName() }}  {{ this.$root.getLastName() }}</p>
-                <!-- <div class="photo"></div> -->
+<!--                <p class="nome">{{ this.$root.getFirstName() }}  {{ this.$root.getLastName() }}</p>-->
+                <!-- <div class="photo"></div>-->
                 <div class="notifications">
                     <i class="fa-regular fa-bell"></i>
                 </div>

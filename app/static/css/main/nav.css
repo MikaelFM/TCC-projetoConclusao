@@ -10,7 +10,7 @@
 :root{
     --body-color: #E4E9F7;
     --sidebar-color: #FFF;
-    --primary-color: #c2d9f391;
+    --primary-color: rgba(194, 217, 243, 0.57);
     --primary-color-light: #F6F5FF;
     --text-color: #5d6061;
     --hover-color: #bcbcbc44;
@@ -56,9 +56,19 @@ body.dark {
     box-shadow: 4px -2px 20px 0px #73737338;
 }
 
+.sidebar .close-button {
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    padding: 2vh;
+    font-size: 3vh;
+    top: 0;
+    right: 0;
+}
 .sidebar li{
     margin:  0 auto;
-    height: 40px;
+    height: 2vw;
     list-style: none;
     display: flex;
     align-items: center;
@@ -68,12 +78,10 @@ body.dark {
 
 .sidebar header .image,
 .sidebar .icon{
-    min-width: 60px;
     border-radius: 6px;
 }
 
 .sidebar .icon{
-    min-width: 60px;
     border-radius: 6px;
     height: 100%;
     display: flex;
@@ -81,6 +89,7 @@ body.dark {
     justify-content: center;
     font-size: 1.1vw;
     margin-left: 0.3vw;
+    width: 3.5vw;
 }
 
 .sidebar .text,
@@ -162,7 +171,7 @@ body.dark {
     background-color: var(--hover-color);
 }
 
-.sidebar .menu-bar{
+.sidebar .menu-bar {
     height: 65%;
     display: flex;
     flex-direction: column;
@@ -204,7 +213,13 @@ body.dark {
   display: flex;
   align-items: center;
   font-family: 'Montserrat', sans-serif;
-  justify-content: space-between;
+  justify-content: end;
+}
+.navbar button {
+    display: none;
+    background-color: transparent;
+    border: none;
+    font-size: 4vh;
 }
 .navbar .search-box {
   background-color: #e3e3e31e;
@@ -266,4 +281,66 @@ body.dark {
 }
 .body-page {
     width: 81vw;
+}
+@media (orientation: portrait) {
+    .sidebar header {
+        margin-top: 3vw;
+    }
+    .sidebar .close-button {
+        display: block;
+    }
+    .sidebar header .image {
+        width: 15vh;
+        height: 15vh;
+    }
+    .sidebar header .image-text p.marca {
+        font-size: 3vh;
+    }
+    .sidebar header .image-text p.submarca {
+        font-size: 1.7vh;
+    }
+    .sidebar li {
+        height: 4vh;
+    }
+    .navbar {
+        height: 8vh;
+        width: 100%;
+        justify-content: space-between;
+    }
+    body.open-sidebar .sidebar{
+        display: block;
+    }
+    .sidebar {
+        display: none;
+        width: 100%;
+    }
+    .sidebar .icon {
+        font-size: 2.4vh;
+        width: 10vw;
+    }
+    .sidebar .icon.fa-regular.fa-folder {
+        font-size: 2vh  !important;
+    }
+    .sidebar .text {
+        font-size: 1.8vh;
+    }
+    .bottom-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 0;
+    }
+    .bottom-content i {
+        font-size: 2.0vh;
+        margin-right: 2vh;
+    }
+    #app #body-page {
+        width: 100%;
+    }
+    .navbar .user {
+        font-size: 2vh;
+    }
+    .navbar button {
+        display: block;
+    }
 }

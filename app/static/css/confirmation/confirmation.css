@@ -56,3 +56,35 @@ a {
     text-decoration: underline;
     margin: 2vw 0;
 }
+form {
+    padding: 0 !important;
+}
+@media (max-width: 1400px) {
+    form button {
+        width: 20vw;
+        height: 5vh;
+        font-size: 1.4vh;
+    }
+    a, span {
+        font-size: 1.4vh;
+    }
+}
+@media (max-width: 960px) {
+    form button {
+        width: 30vw;
+        height: 5vh;
+        margin-bottom: 2vh;
+    }
+    span {
+        font-size: 1.8vh;
+        margin: 1vh 0 2vh 0;
+    }
+}
+@media (max-width: 555px) {
+    form button {
+        width: 50vw;
+        height: 5vh;
+        margin-bottom: 4vh;
+        font-size: 1.6vh !important;
+    }
+}

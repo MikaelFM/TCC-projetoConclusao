@@ -5,3 +5,20 @@ i {
     font-size: 4vw;
     padding-bottom: 1vw;
 }
+@media (max-width: 1400px) {
+    form button {
+        width: 20vw;
+        height: 4vh;
+        margin-top: 4vh;
+    }
+    .fa-solid, .fas {
+        font-size: 7vh;
+        margin-bottom: 4vh;
+    }
+}
+@media (max-width: 960px) {
+    form button {
+        width: 50vw;
+        height: 5vh;
+    }
+}

@@ -1,13 +1,14 @@
-from app.models import TokenUsuario, FuncionarioRH
+from app.models import TokenUsuario, FuncionarioRH, Servidor
 import app.functions.email as _email
 from app.functions import empty
+from app.functions.validate import *
 from app.functions import custom_render_template as render_template
 from flask import session
 from werkzeug.security import generate_password_hash
 
 def save(nome, email, telefone, cpf, senha):
     try:
-        funcionario = FuncionarioRH(nome=nome, email=email,telefone=telefone, cpf=cpf, senha=senha)
+        funcionario = FuncionarioRH(nome=nome.strip(), email=email.strip(),telefone=get_clean_number(telefone), cpf=get_clean_number(cpf), senha=senha.strip())
         valoresRepetidos = funcionario.getRepetido()
         if not empty(valoresRepetidos):
             if len(valoresRepetidos) == 1:
@@ -15,27 +16,44 @@ def save(nome, email, telefone, cpf, senha):
             else:
                 msg = "Usuário já cadastrado, por favor, verifique"
             return {'success': False, 'msg': msg}
+        if funcionario.nome.count(" ") == 0:
+            return {'success': False, 'msg': 'Por favor, digite seu nome completo'}
+        if not name_validate(funcionario.nome):
+            return {'success': False, 'msg': 'Por favor, digite um nome válido com apenas letras e espaços'}
+        if not cpf_validate(funcionario.cpf):
+            return {'success': False, 'msg': 'Por favor, digite um CPF válido'}
+        if not validate_phone(funcionario.telefone):
+            return {'success': False, 'msg': 'Por favor, digite um telefone válido'}
+
         save = funcionario.save()
         if not save:
             return {'success': False, 'msg': save}
-        return {'success': True, 'msg': 'Usuário e/ou senha incorretos'}
+        return {'success': True, 'msg': 'Cadastrado com sucesso'}
     except Exception as e:
         print(e)
         return {'success': False, 'msg': e}
 
 def login(email, senha, remember):
-    funcionario = (FuncionarioRH(email=email, senha=senha)).exists()
+    funcionario = (FuncionarioRH(login_padrao=email, senha_padrao=senha)).exists()
     if funcionario:
-        if funcionario.email_confirmado == 1:
-            session.permanent = False
-            if remember == 'true':
-                session.permanent = True
-            session['user_id'] = funcionario.id
-            return {'success': True, 'msg': '', 'confirmarEmail': False}
-        else:
-            return {'success': True, 'msg': '', 'confirmarEmail': True}
+        session.permanent = False
+        if remember == 'true':
+            session.permanent = True
+        session['user_id'] = funcionario.id
+        return {'success': True, 'msg': '', 'confirmarEmail': False}
     else:
-        return {'success': False, 'msg': 'Usuário e/ou senha incorretos'}
+        servidor = (Servidor(email=email, cpf=senha)).exists()
+        if servidor:
+            if servidor.email_confirmado == 1:
+                session.permanent = False
+                if remember == 'true':
+                    session.permanent = True
+                session['user_id'] = funcionario.id
+                return {'success': True, 'msg': '', 'confirmarEmail': False}
+            else:
+                return {'success': True, 'msg': '', 'confirmarEmail': True}
+        else:
+            return {'success': False, 'msg': 'Usuário e/ou senha incorretos'}
 
 def makeEmailConfirmation(email):
     try:

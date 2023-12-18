@@ -6,6 +6,7 @@
                 class="input"
                 placeholder=""
                 v-model="nome"
+                maxlength="85"
         >
         <label
                 class="label-input"
@@ -21,6 +22,7 @@
                 class="input"
                 placeholder=""
                 v-model="email"
+                maxlength="256"
         >
         <label
                 class="label-input"
@@ -28,12 +30,12 @@
             E-mail
         </label>
     </div>
-    <div class="control">
+    <div class="control control-duple">
         <div class="control">
             <input
                     type="tel"
                     name="telefone"
-                    class="input"
+                    class="input format-number"
                     placeholder=""
                     v-model="telefone"
             >
@@ -47,7 +49,7 @@
             <input
                     type="cpf"
                     name="cpf"
-                    class="input"
+                    class="input format-cpf"
                     placeholder=""
                     v-model="cpf"
             >
@@ -58,7 +60,7 @@
             </label>
         </div>
     </div>
-    <div class="control">
+    <div class="control control-duple">
         <div class="control">
             <input
                     type="date"
@@ -66,6 +68,8 @@
                     class="input"
                     placeholder=""
                     v-model="dataAdmissao"
+                    :class="{'disabled' : inEdit}"
+                    :disabled="inEdit"
             >
             <label
                     class="label-input"
@@ -74,18 +78,31 @@
             </label>
         </div>
         <div class="control">
-            <select v-model="tipo" class="input">
+            <select v-model="tipo" class="input" :disabled="inEdit">
                 <option value="" class="disabled" disabled>Tipo</option>
                 <option v-for="(tipo) in tipoServidores" :value="tipo.id">{{tipo.descricao}}</option>
             </select>
         </div>
     </div>
     <div class="control">
-        <select v-model="cargo" class="input select">
-            <option value="" disabled>Cargo</option>
-        </select>
+        <input
+            type="text"
+            name="cargo"
+            class="input"
+            placeholder=""
+            v-model="cargo"
+            maxlength="40"
+        >
+        <label
+                class="label-input"
+        >
+            Cargo
+        </label>
+    </div>
+    <div class="error control" style="height: 2vw" v-if="msgError != ''">
+        <p>{{msgError}}</p>
     </div>
     <div class="control">
-        <input class="input" type="submit" value="Confirmar" @click="">
+        <input class="input" type="submit" value="Confirmar" :disabled="!canSubmit">
     </div>
 </form>

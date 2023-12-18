@@ -1,18 +1,21 @@
 <section id="el-main">
     [% if token != 'expirado': %]
         <div v-if="!corrigir">
-            <div v-if="!sented">
-                <h1>Confirme seu E-mail</h1>
-                <p>Um link de confirmação será enviado para <b>[[email]]</b>. Por favor, verifique sua caixa de entrada e siga o link para confirmar seu endereço de e-mail. O link é válido por 1 hora.</p>
-                <button
-                        @click="sendEmail('/sendConfirmation')"
-                        :class="['input', 'button', { 'disabled': buttonDisabled }]"
-                        :disabled="buttonDisabled" class="input button"
-                >
-                    {{txtButton}}
-                </button>
-            </div>
-            <div v-else>
+            <form v-if="!sented" onsubmit="event.preventDefault()">
+                <div>
+                    <h1>Confirme seu E-mail</h1>
+                    <p>Ao confirmar, um link de confirmação será enviado para <b>[[email]]</b>. Por favor, verifique sua caixa de entrada e siga o link para confirmar seu endereço de e-mail. O link é válido por 1 hora.</p>
+                    <button
+                            @click="sendEmail('/sendConfirmation')"
+                            :class="['input', 'button', { 'disabled': buttonDisabled }]"
+                            :disabled="buttonDisabled" class="input button"
+                    >
+                        {{txtButton}}
+                    </button>
+                </div>
+            </form>
+            <form v-else>
+                <div>
                 <h1>Verifique sua Caixa de Entrada</h1>
                 <p>Um link de confirmação foi enviado para <b>[[email]]</b>. Por favor, verifique sua caixa de entrada e siga o link para confirmar seu endereço de e-mail. O link é válido por 1 hora.</p>
                 <button
@@ -30,6 +33,7 @@
                     00:{{time.toString().padStart(2, '0')}}
                 </span>
             </div>
+            </form>
             <a href="#" @click="setCorrigir()">Este não é o meu E-mail / O E-mail está incorreto</a>
         </div>
         <form id="corrigir" method="post" action="/sendRecovery" v-else>
@@ -52,13 +56,15 @@
                 </label>
             </div>
             <p class="error" v-if="notExists">Nenhuma conta com este e-mail foi encontrada</p>
-            <div class="control flex-buttons">
-                <input type="submit" class="cancel" value="Cancelar" @click="cancelCorrigir">
-                <input type="submit" value="Confirmar">
+            <div class="control d-control">
+                <div class="buttons flex-buttons">
+                    <input type="submit" class="cancel" value="Cancelar" @click="cancelCorrigir">
+                    <input type="submit" value="Confirmar">
+                </div>
             </div>
         </form>
     [% elif token == 'expirado': %]
-        <form id="corrigir" method="post" action="/sendRecovery" v-else>
+        <form id="corrigir" method="post" action="/sendRecovery">
             <h1>Digite seu E-mail</h1>
             <p>Por favor, corrija seu e-mail, digitando-o corretamente</p>
             <div class="control">
@@ -78,9 +84,11 @@
                 </label>
             </div>
             <p class="error" v-if="notExists">Nenhuma conta com este e-mail foi encontrada</p>
-            <div class="control flex-buttons">
-                <input type="submit" class="cancel" value="Cancelar" @click="cancelCorrigir">
-                <input type="submit" value="Confirmar">
+            <div class="control d-control">
+                <div class="buttons flex-buttons">
+                    <input type="submit" class="cancel" value="Cancelar" @click="cancelCorrigir">
+                    <input type="submit" value="Confirmar">
+                </div>
             </div>
         </form>
     [% endif %]

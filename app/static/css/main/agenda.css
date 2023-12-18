@@ -12,7 +12,7 @@ section#agenda .agenda {
 section#agenda .mes-view {
     display: grid;
     grid-template-columns: repeat(7, calc((100%)/7));
-    grid-template-rows: repeat(5, 20%);
+    grid-template-rows: repeat(6, calc(100%/6));
 }
 section#agenda .ano-view, .mes-view {
     width: 100%;
@@ -109,9 +109,19 @@ section#agenda .mes-view .dia .event {
     width: 100%;
     border-radius: 5px;
     background-color: var(--primary-color);
-    padding: 0.12vw 0.4vw;
+    padding: 0.22vw 0.4vw;
     font-size: 0.7vw;
     margin-bottom: 0.3vw;
+    cursor: pointer;
+}
+section#agenda .mes-view .dia .event.button {
+    background-color: var(--hover-color);
+}
+section#agenda .mes-view .dia .event:hover {
+    background-color: rgba(166, 190, 237, 0.57);
+}
+section#agenda .mes-view .dia .event.button:hover {
+    background-color: #dfdfdf;
 }
 section#agenda .numero-dia {
     font-family: 'Montserrat', sans-serif;
@@ -129,7 +139,7 @@ section#agenda .ano-view {
 }
 section#agenda .ano-view .mes {
    width: 15vw;
-   height: 10vw; 
+   height: 11vw;
 }
 section#agenda .ano-view .mes-header {
     height: 20%;
@@ -146,13 +156,20 @@ section#agenda .ano-view .grid-dias {
     height: 80%;
     width: 100%;
     grid-template-columns: repeat(7, calc((100%)/7));
-    grid-template-rows: repeat(5, calc((100%)/6));
+    grid-template-rows: repeat(6, calc((100%)/7));
 }
 section#agenda .ano-view .grid-dias .dia {
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 500;
+    cursor: pointer;
+}
+section#agenda .ano-view .grid-dias .dia.with-events {
+    background-color: var(--primary-color);
+}
+section#agenda .ano-view .grid-dias .dia:hover {
+    background-color: var(--hover-color);
 }
 section#agenda .ano-view .grid-dias .dia p {
     text-align: center;
@@ -210,6 +227,13 @@ section#agenda .programacao-view .evento .eventos li {
     font-size: 0.75vw;
     line-height: 1.3vw;
 }
+section#agenda .programacao-view .evento .eventos li p {
+    display: inline-block;
+    cursor: pointer;
+}
+section#agenda .programacao-view .evento .eventos li p:hover {
+    color: rgba(128, 128, 128, 0.75);
+}
 section#agenda .programacao-view .evento .eventos li::before {
     content: '\2022';
     color: #9dc6f48f;
@@ -217,4 +241,59 @@ section#agenda .programacao-view .evento .eventos li::before {
     position: absolute;
     left: -1.5vw;
     top: -0.17vw;
-  }
+}
+section#agenda .gray {
+    color: rgba(0, 0, 0, 0.4);
+}
+section#agenda .header .date .text {
+    display: none;
+}
+@media (orientation: portrait) {
+    section#agenda .programacao-view {
+        margin-top: 5vh;
+    }
+    section#agenda .programacao-view .evento {
+        padding: 3vh 2.7vh;
+    }
+    section#agenda .flex {
+        height: 4.2vh;
+        align-items: center;
+        gap: 1vh;
+    }
+    section#agenda .header .date .text {
+        display: block;
+    }
+    section#agenda .header .date .text h1 {
+        font-size: 3vh;
+    }
+    section#agenda .programacao-view .evento .dia-numero {
+        height: 4.2vh;
+        width: 4.2vh;
+        font-size: 2vh;
+    }
+    section#agenda .programacao-view .evento .detalhe {
+        font-size: 2vh;
+    }
+    section#agenda .header .flex-content .button.today, section#agenda .header .flex-content select.button {
+        display: none;
+    }
+    section#agenda .programacao-view .evento .eventos {
+        margin-left: 6.4vh;
+        margin-top: 1vh;
+    }
+    section#agenda .programacao-view .evento .eventos li {
+        font-size: 1.6vh;
+        line-height: 3vh;
+    }
+    section#agenda .programacao-view .evento .eventos li::before {
+        content: '\2022';
+        color: #9dc6f48f;
+        font-size: 5vh;
+        left: -4vw;
+        top: -0.45vw;
+    }
+    section#agenda .header .flex-content .button {
+        font-size: 1.6vh;
+        padding: 1vh 2vh;
+    }
+}

@@ -1,0 +1,26 @@
+<form id="formArquivos" @submit="salvar">
+    <div class="control">
+        <input
+                type="text"
+                name="nome"
+                class="input"
+                placeholder=""
+                v-model="nome"
+        >
+        <label
+                class="label-input"
+        >
+             Nome do Arquivo
+        </label>
+    </div>
+    <div class="control control-file" v-if="id == null">
+        <div id="file-drop" @dragover.prevent @drop="getFile">
+            <label for="input-file" class="button">Selecione um arquivo</label>
+            <input id="input-file" type="file" @change="getFile">
+            <span class="file-name">{{arquivo.name}}</span>
+        </div>
+    </div>
+    <div class="control">
+        <input class="input" type="submit" value="Confirmar" :disabled="!canSubmit">
+    </div>
+</form>

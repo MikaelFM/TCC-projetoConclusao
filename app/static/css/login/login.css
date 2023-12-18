@@ -1,170 +1,289 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500&display=swap");
+
 *, *:focus {
-  box-sizing: 0;
-  box-shadow: 0;
-  border: none;
-  outline: 0;
+    box-sizing: 0;
+    box-shadow: 0;
+    border: none;
+    outline: 0;
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f8f8f8;
-  font-family: "Montserrat", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f8f8f8;
+    font-family: "Montserrat", sans-serif;
 }
 
 section {
-  background-color: white;
-  width: 55vw;
-  height: 30vw;
-  border-radius: 40px;
-  display: flex;
-  box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
-  -webkit-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    width: 55vw;
+    height: 30vw;
+    border-radius: 40px;
+    display: flex;
+    box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
 }
 
 .box {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 form, .box {
-  padding: 5vh 0;
+    padding: 5vh 0;
 }
 
 form {
-  padding-left: 2vw;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    padding-left: 2vw;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 form h1 {
-  font-family: "Poppins", sans-serif;
-  font-size: 2.7vw;
+    font-family: "Poppins", sans-serif;
+    font-size: 2.7vw;
 }
 
 .check-box {
-  font-size: 0.7vw;
-  display: flex;
-  align-items: center;
-  gap: 0.3vw;
+    font-size: 0.7vw;
+    display: flex;
+    align-items: center;
+    gap: 0.3vw;
+    width: calc(76% + 2vw);
 }
 
 .double-checkbox {
-  justify-content: space-between;
-  width: 80%;
+    justify-content: space-between;
+    width: 80%;
 }
 
 input:not([type=checkbox]) {
-  font-family: "Montserrat", sans-serif;
-  border: 1.5px solid black;
-  border-radius: 40px;
-  width: 65%;
-  height: 60%;
-  padding: 0 1vw;
-  font-size: 0.75vw;
-  transition: all 0.1s;
+    width: 76%;
+    height: 60%;
+}
+
+input:not([type=checkbox]) {
+    font-family: "Montserrat", sans-serif;
+    border: 1.5px solid black;
+    border-radius: 40px;
+    padding: 0 1vw;
+    font-size: 0.75vw;
+    transition: all 0.1s;
 }
 
 input:not([type=checkbox], [type=checkbox]):focus {
-  border-color: rgba(157, 188, 223, 0.8078431373);
+    border-color: rgba(157, 188, 223, 0.8078431373);
 }
 
 input[type=password] {
-  font-size: 0.9vw;
+    font-size: 0.9vw;
 }
 
 input[type=password]::-moz-placeholder {
-  font-size: 0.75vw;
+    font-size: 0.75vw;
 }
 
 input[type=password]::placeholder {
-  font-size: 0.75vw;
+    font-size: 0.75vw;
 }
 
 input[type=submit] {
-  background-color: black;
-  color: white;
-  width: 73%;
-  height: 65%;
-  transition: all 0.2s;
+    background-color: black;
+    color: white;
+    transition: all 0.2s;
+    box-sizing: content-box;
 }
 
 input[type=submit]:hover {
-  background-color: rgba(157, 188, 223, 0.8078431373);
-  border: 1px solid rgba(157, 188, 223, 0.8078431373);
+    background-color: rgba(157, 188, 223, 0.8078431373);
+    border: 1px solid rgba(157, 188, 223, 0.8078431373);
 }
 
 .logo-ifrs {
-  width: 15vw;
-  height: 18vw;
-  margin-top: 1vw;
-  background-image: url("../../images/ifrs.png");
-  background-size: 90%;
-  background-repeat: no-repeat;
-  background-position: center;
+    width: 15vw;
+    height: 18vw;
+    margin-top: 1vw;
+    background-image: url("../../images/ifrs.png");
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .box p {
-  margin-top: 1.3vw;
-  font-size: 0.8vw;
+    margin-top: 1.3vw;
+    font-size: 0.8vw;
 }
 
 a {
-  color: black;
-  font-weight: bold;
+    color: black;
+    font-weight: bold;
 }
 
 a:hover {
-  color: rgba(157, 188, 223, 0.8078431373);
+    color: rgba(157, 188, 223, 0.8078431373);
 }
 
 .label-input {
-  text-align: left;
-  position: absolute;
-  left: 5.2vw;
-  font-size: 0.75vw;
-  cursor: text;
-  color: gray;
-  transition: top 250ms ease-in left 250ms ease-in font-size 250ms ease-in;
+    text-align: left;
+    position: absolute;
+    left: calc((100% - 76%) / 2 + 1%);
+    font-size: 0.75vw;
+    cursor: text;
+    color: gray;
+    transition: top 250ms ease-in left 250ms ease-in font-size 250ms ease-in;
 }
 
 .input:not(:-moz-placeholder-shown).input:not(:focus) ~ .label-input {
-  background-color: rgb(255, 255, 255);
-  padding: 0.1vw;
-  top: 0.1vw;
-  font-size: 0.65vw;
-  cursor: default;
+    background-color: rgb(255, 255, 255);
+    padding: 0.1vw;
+    top: 0.1vw;
+    font-size: 0.65vw;
+    cursor: default;
 }
 
 .input:focus ~ .label-input,
 .input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
-  background-color: rgb(255, 255, 255);
-  padding: 0.1vw;
-  top: 0.1vw;
-  font-size: 0.65vw;
-  cursor: default;
+    background-color: rgb(255, 255, 255);
+    padding: 0.1vw;
+    top: 0.1vw;
+    font-size: 0.65vw;
+    cursor: default;
 }
 
 .esqueceu_senha {
-  width: calc(65% + 2vw);;
-  margin-top: 0.5vw;
-  font-size: 0.7vw;
-  font-weight: normal;
-  text-align: center;
+    width: calc(85% + 2vw);;
+    margin-top: 0.5vw;
+    font-size: 0.7vw;
+    font-weight: normal;
+    text-align: center;
 }
 
 .error {
-  color: red;
-  font-size: 0.7vw;
-  font-weight: 500;
+    color: red;
+    font-size: 0.65vw;
+    font-weight: 500;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.error p {
+    width: 76%;
+}
+
+.control {
+    width: 100%;
+}
+.portrait {
+    display: none;
+}
+@media (max-width: 1400px) {
+    body {
+        background-color: white !important;
+    }
+
+    section {
+        padding: 6vh 0 !important;
+        width: 70% !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+    }
+
+    .box {
+        display: none !important;
+    }
+
+    form {
+        width: 100% !important;
+        padding-left: 0 !important;
+    }
+
+    form h1 {
+        font-size: 5vh;
+    }
+
+    input:not([type="checkbox"]), .label-input {
+        font-size: 1.6vh !important;
+    }
+
+    input:not([type="checkbox"]) {
+        box-sizing: border-box !important;
+        height: 95% !important;
+        padding: 0 2vh !important;
+    }
+    .label-input {
+        left: calc((100% - 65%) / 2 + 3vh) !important;
+    }
+
+    .control {
+        height: 5vh;
+        margin: 1vh !important;
+    }
+
+    .check-box, .esqueceu_senha, .error, .portrait   {
+        font-size: 1.6vh !important;
+    }
+
+    .input:focus ~ .label-input,
+    .input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
+        padding: 0.1vw !important;
+        top: -0.9vh !important;
+        font-size: 1.3vh !important;
+    }
+    input:not([type="checkbox"]), .check-box, .error p {
+        width: 65% !important;
+    }
+    .error {
+        width: 100% !important;
+    }
+    .error p {
+        text-align: left !important;
+    }
+    .portrait {
+        display: block !important;
+    }
+}
+@media (max-width: 960px) {
+    section{
+        width: 85% !important;
+        justify-content: normal !important;
+        padding-top: 8vh !important;
+    }
+    form {
+        padding-bottom: 5vh !important;
+    }
+    form h1 {
+        margin-bottom: 6vh !important;
+        font-size: 5.5vh;
+    }
+    .label-input {
+        left: 2vh !important;
+    }
+    input:not([type="checkbox"]), .check-box, .error p {
+        width: 100% !important;
+    }
+    .input:focus ~ .label-input,
+    .input:not(:placeholder-shown).input:not(:focus) ~ .label-input {
+        background-color: rgb(255, 255, 255);
+        padding: 0.1vw !important;
+        top: -0.3vh !important;
+        font-size: 1.3vh !important;
+    }
+    .control {
+        height: 5.5vh;
+        margin: 1.5vh 1vh !important;
+    }
 }

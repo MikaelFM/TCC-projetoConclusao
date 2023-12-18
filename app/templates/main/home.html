@@ -2,20 +2,20 @@
     <article id="main-content">
         <div class="title">
             <div class="text">
-                <h1>Olá, {{ this.$root.getFirstName() }}!</h1>
+                <h1>Olá!</h1>
                 <p>{{ this.$root.getDataExtenso() }}</p>
             </div>
-            <div class="button">
-                <button class="new">+</button>
-            </div>
+<!--            <div class="button">-->
+<!--                <button class="new">+</button>-->
+<!--            </div>-->
         </div>
         <div class="events">
             <h2>Próximos Eventos</h2>
             <div class="events-slider">
-                <div class="event" v-for="(evento) in this.$root.dados.eventos">
+                <div class="event" v-for="(evento) in this.$root.dados.eventos.slice(0,2)">
                     <p class="desc">{{evento.categoria != 1 ? evento.title : ''}}</p>
                     <p class="name">{{evento.descricao}}</p>
-                    <p class="date">{{$root.formatarDataHora(evento.data_inicio, 'DD/MM')}}</p>
+                    <p class="date">{{$root.formatarDataHora(evento.data, 'DD/MM')}}</p>
                 </div>
                 <div class="event" v-if="$root.dados.eventos.length === 0">
                     <p class="desc">Nenhum evento</p>
@@ -27,7 +27,7 @@
         <div class="files">
             <h2>Arquivos Recentes</h2>
             <div class="files-box">
-                <div class="file" v-for="(arquivo) in this.$root.dados.arquivos">
+                <div class="file" v-for="(arquivo) in this.$root.dados.arquivos.slice(0,6)">
                     <file-icon></file-icon>
                     <div class="desc">
                         <p class="date">{{$root.formatarDataHora(arquivo.data_atualizacao, 'DD, |M|')}}</p>
@@ -36,15 +36,19 @@
                 </div>
             </div>
         </div>
+        <div class="calendar-div">
+            <h2>Calendário</h2>
+            <calendar-home></calendar-home>
+        </div>
     </article>
     <article id="secondary-content">
         <h2>Calendário</h2>
         <calendar-home></calendar-home>
-        <div class="toggle">
-            <div class="toggle-switch">
-                <input type="checkbox" id="switch" />
-                <label for="switch"></label>
-            </div>
-        </div>
+<!--        <div class="toggle">-->
+<!--            <div class="toggle-switch">-->
+<!--                <input type="checkbox" id="switch" />-->
+<!--                <label for="switch"></label>-->
+<!--            </div>-->
+<!--        </div>-->
     </article>
 </section>

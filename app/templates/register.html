@@ -5,7 +5,7 @@
             Já possui uma conta? <a href="/login">Faça login</a>
         </p>
     </div>
-    <form action="/emailConfirmation" method="post" @submit="submit">
+    <form id="form-register" action="/emailConfirmation" method="post" @submit="submit">
         <h1>Registre-se</h1>
         <div class="control">
             <input
@@ -15,6 +15,7 @@
                 v-model="nome"
                 class="input"
                 placeholder=""
+                maxlength="85"
             >
             <label
                 for="nome"
@@ -25,11 +26,11 @@
         </div>
         <div class="control">
             <input
-                type="cpf"
+                type="text"
                 name="cpf"
                 id="cpf"
                 v-model="cpf"
-                class="input"
+                class="input format-cpf"
                 placeholder=""
             >
             <label
@@ -45,7 +46,7 @@
                 name="telefone"
                 id="telefone"
                 v-model="telefone"
-                class="input"
+                class="input format-number"
                 placeholder=""
             >
             <label
@@ -63,6 +64,7 @@
                 v-model="email"
                 class="input"
                 placeholder=""
+                maxlength="256"
             >
             <label
                 for="email"
@@ -79,6 +81,7 @@
                 v-model="password"
                 class="input"
                 placeholder=""
+                maxlength="110"
             >
             <label
                 for="password"
@@ -95,6 +98,7 @@
                 v-model="confirmPassword"
                 class="input"
                 placeholder=""
+                maxlength="110"
             >
             <label
                 for="confirm-password"
@@ -109,14 +113,17 @@
                 <label for="">Mantenha-me conectado</label>
             </div>
         </div> -->
-        <div class="error" v-if="msgError != ''">
+        <div class="error control" v-if="msgError != ''">
             <p>{{msgError}}</p>
         </div>
         <div class="control">
-            <input type="submit" value="Confirmar">
+            <input type="submit" value="Confirmar" :disabled="!canSubmit">
         </div>
+        <p class="portrait">
+            Já possui uma conta? <a href="/login">Faça login</a>
+        </p>
     </form>
 </section>
 <script>
-    $('#nome').focus()
+    $('#nome').focus();
 </script>
