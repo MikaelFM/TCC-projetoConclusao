@@ -1,21 +1,17 @@
  <section id="return_token">
     <form onsubmit="event.preventDefault()">
-        [% if response == "invalid" or (response == "used" and type == "password"): %]
+        [% if response == "invalid": %]
             <h1>Token Inválido</h1>
             <p>O token solicitado é inválido. Por favor, repita o processo de geração do mesmo.</p>
-        [% elif (response == "success" and type == "email") or (response == "used" and type == "email"): %]
+        [% else: %]
             <i class="fa-solid fa-envelope-circle-check"></i>
             <h1>E-mail confirmado com sucesso</h1>
             <p>E-mail confirmado com sucesso. Agora você já pode fazer login</p>
-        [% elif (response == "success" and type == "password"): %]
-            <i class="fa-solid fa-key"></i>
-            <h1>Senha alterada com sucesso</h1>
-            <p>Senha alterada com sucesso. Agora você já pode fazer login</p>
-        [% endif %]
         <button
                 onclick="window.location.href = '/login'"
         >
             Ir para a página de Login
         </button>
+        [% endif %]
     </form>
 </section>

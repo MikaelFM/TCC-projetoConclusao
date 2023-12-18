@@ -12,15 +12,16 @@ from app.functions.validate import *
 def salvar(data):
     try:
         servidor = Servidor(
-            data['id'] if data['id'] != '' else None,
-            (data['nome']).strip(),
-            (data['email']).strip(),
-            get_clean_number(data['telefone']),
-            get_clean_number(data['cpf']),
-            data['dataAdmissao'],
-            data['cargo'] if data['cargo'] != '' else None,
-            data['foto'],
-            data['tipo'] if data['tipo'] != '' else None,
+            id=(data['id'] if data['id'] != '' else None),
+            nome=(data['nome']).strip(),
+            email=(data['email']).strip(),
+            telefone=get_clean_number(data['telefone']),
+            cpf=get_clean_number(data['cpf']),
+            data_admissao=data['dataAdmissao'],
+            cargo=data['cargo'] if data['cargo'] != '' else None,
+            foto=data['foto'],
+            id_tipo=(data['tipo'] if data['tipo'] != '' else None),
+            email_confirmado=False
         )
         valoresRepetidos = servidor.getRepetido()
         if not empty(valoresRepetidos):
@@ -55,6 +56,7 @@ def delete(id):
         db.session.rollback()
         print(e)
         return {"success": False, "msg": e}
+
 def vincularEventosEmailaoFuncionario(id_servidor, id_tipo, data_admissao):
     tabela_progressao = TiposServidores.query.filter_by(id=id_tipo).first().tabela_progressao
     if tabela_progressao is None:

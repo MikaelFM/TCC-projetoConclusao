@@ -19,32 +19,8 @@ class FuncionarioRH(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     login_padrao = db.Column(db.String(258))
     senha_padrao = db.Column(db.String(110))
-
-    # comentar
-    def getRepetido(self):
-        repetidos = []
-        dados = execute(f"""
-            SELECT 
-                cpf = '{self.cpf}' as 'CPF',
-                telefone = '{self.telefone}' as 'Telefone',
-                email = '{self.email}' as 'E-mail'
-            FROM teste.funcionario_rh 
-            WHERE 
-                cpf = '{self.cpf}' or 
-                telefone = '{self.telefone}' or 
-                email = '{self.email}'""")
-        if not empty(dados):
-            for key, value in (dados[0]).items():
-                if value == 1:
-                    repetidos.append(key)
-        return repetidos
-
     def deleteConfirmations(self):
         return execute(f"""DELETE FROM teste.token_usuario WHERE user_id = {self.id} AND action = 'tokenUser'""")
-
-    #comentar
-    def deleteRecoveries(self):
-        return execute(f"""DELETE FROM teste.token_usuario WHERE user_id = {self.id} AND action = 'passwordRecovery'""")
 
     def emailExists(self):
         funcionario = self.query.filter_by(email=self.email).first()
@@ -143,16 +119,7 @@ class Servidor(db.Model):
     foto = db.Column(db.Text)
     id_tipo = db.Column(db.Integer, ForeignKey('tipos_servidores.id'))
     email_confirmado = db.Column(db.Boolean, default=False)
-    def __init__(self, id, nome, email, telefone, cpf, data_admissao, cargo, foto, id_tipo):
-        self.id = id
-        self.nome = nome
-        self.email = email
-        self.telefone = telefone
-        self.cpf = cpf
-        self.data_admissao = data_admissao
-        self.cargo = cargo
-        self.foto = foto
-        self.id_tipo = id_tipo
+
 
     @staticmethod
     def getServidores():
@@ -203,6 +170,15 @@ class Servidor(db.Model):
             print(e)
             db.session.rollback()
             return None
+
+    def exists(self):
+        funcionario = self.query.filter_by(email=self.email, cpf=self.cpf).first()
+        if funcionario is None:
+            return False
+        if not empty(funcionario):
+            return funcionario
+        else:
+            return False
 
     def __repr__(self):
         return '<Servidor %r>' % self.id
@@ -335,11 +311,9 @@ class TokenUsuario(db.Model):
     token = db.Column(db.String(255))
     timestamp = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
 
-    def __init__(self, user_id, token, action):
+    def __init__(self, user_id, token):
         self.user_id = user_id
         self.token = token
-        self.action = action
-
     def save(self):
         try:
             if self.id is None:
@@ -365,20 +339,20 @@ class TokenUsuario(db.Model):
             return None
 
     @staticmethod
-    def getFuncionarioToken(token, action):
+    def getFuncionarioToken(token):
         return execute(f"""
                     SELECT user.*,
                     TIMESTAMPDIFF (MINUTE, t.timestamp, now()) >= 60 as expirado
                     FROM token_usuario t
                     LEFT JOIN servidor user ON user.id = t.user_id
-                    WHERE t.token = '{token}' AND t.action = '{action}'
+                    WHERE t.token = '{token}'
                     """)
 
     @staticmethod
     def createTokenUsuario(email, action):
-        user_id = (FuncionarioRH.query.filter_by(email=email).first()).id
+        user_id = (Servidor.query.filter_by(email=email).first()).id
         token = generate_token()
-        token_usuario = TokenUsuario(user_id=user_id, token=token, action=action)
+        token_usuario = TokenUsuario(user_id=user_id, token=token)
         token_usuario.save()
         return token
 
