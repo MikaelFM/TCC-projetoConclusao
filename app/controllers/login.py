@@ -17,7 +17,7 @@ def login(email, senha, remember):
                 session.permanent = False
                 if remember == 'true':
                     session.permanent = True
-                session['user_id'] = funcionario.id
+                session['user_id'] = servidor.id
                 return {'success': True, 'msg': '', 'confirmarEmail': False}
             else:
                 return {'success': True, 'msg': '', 'confirmarEmail': True}

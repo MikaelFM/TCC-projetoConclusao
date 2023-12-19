@@ -6,8 +6,7 @@ def salvar(data):
             data['data'],
             data['descricao'],
             1,
-            None,
-            None,
+            (session['user_id'] if session['type'] == 'servidor' else None),
             data['privacidade'],
         )
         evento.save()

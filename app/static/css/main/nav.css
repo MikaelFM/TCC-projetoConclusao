@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500&display=swap');
 @import url('https://fonts.cdnfonts.com/css/nimbus-sans-d-ot');
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-:root{
+:root {
     --body-color: #E4E9F7;
     --sidebar-color: #FFF;
     --primary-color: rgba(194, 217, 243, 0.57);
@@ -20,16 +20,18 @@
     --tran-04: all 0.3s ease;
     --tran-05: all 0.3s ease;
 }
+
 .sidebar, .navbar {
     font-family: 'helvetica', sans-serif;
     letter-spacing: 0.8px;
 }
+
 body {
     min-height: 100vh;
     transition: var(--tran-05);
 }
 
-::selectedion{
+::selectedion {
     background-color: var(--primary-color);
     color: #fff;
 }
@@ -42,7 +44,7 @@ body.dark {
     --text-color: #ccc;
 }
 
- .sidebar{
+.sidebar {
     position: fixed;
     top: 0;
     left: 0;
@@ -51,7 +53,7 @@ body.dark {
     padding: 10px 14px;
     background: var(--sidebar-color);
     transition: var(--tran-05);
-    z-index: 100;  
+    z-index: 100;
     font-weight: 400;
     box-shadow: 4px -2px 20px 0px #73737338;
 }
@@ -66,8 +68,9 @@ body.dark {
     top: 0;
     right: 0;
 }
-.sidebar li{
-    margin:  0 auto;
+
+.sidebar li {
+    margin: 0 auto;
     height: 2vw;
     list-style: none;
     display: flex;
@@ -77,11 +80,11 @@ body.dark {
 }
 
 .sidebar header .image,
-.sidebar .icon{
+.sidebar .icon {
     border-radius: 6px;
 }
 
-.sidebar .icon{
+.sidebar .icon {
     border-radius: 6px;
     height: 100%;
     display: flex;
@@ -93,23 +96,23 @@ body.dark {
 }
 
 .sidebar .text,
-.sidebar .icon{
+.sidebar .icon {
     color: var(--text-color);
     transition: var(--tran-03);
 }
 
-.sidebar .text{
+.sidebar .text {
     font-size: 0.87vw;
     white-space: nowrap;
     opacity: 1;
 }
 
-.sidebar header{
+.sidebar header {
     position: relative;
     margin-top: 7vh;
 }
 
-.sidebar header .image-text{
+.sidebar header .image-text {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -120,15 +123,18 @@ body.dark {
     font-weight: 550;
     letter-spacing: normal;
 }
+
 .sidebar header .image-text p.marca {
     font-size: 1.2vw;
     margin-top: 2vh;
 }
+
 .sidebar header .image-text p.submarca {
     font-size: 0.9vw;
     color: #737373;
 }
-.sidebar header .image{
+
+.sidebar header .image {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -147,7 +153,8 @@ body.dark {
 .sidebar .menu {
     margin-top: 6vh;
 }
-.sidebar li a{
+
+.sidebar li a {
     list-style: none;
     height: 100%;
     background-color: transparent;
@@ -159,14 +166,17 @@ body.dark {
     text-decoration: none;
     transition: var(--tran-03);
 }
+
 .sidebar .selected a {
     background-color: var(--primary-color);
     color: white;
 }
+
 .selected .text,
 .selected .icon {
     color: #4c68b2;
 }
+
 .sidebar li:not(.selected) a:hover {
     background-color: var(--hover-color);
 }
@@ -178,15 +188,18 @@ body.dark {
     justify-content: space-between;
     overflow-y: scroll;
 }
-.menu-bar::-webkit-scrollbar{
+
+.menu-bar::-webkit-scrollbar {
     display: none;
 }
+
 .bottom-content i {
     display: block;
     width: 2vw;
     font-size: 1.1vw;
     color: var(--text-color)
 }
+
 .bottom-content {
     padding-left: 13.8%;
     display: flex;
@@ -198,148 +211,183 @@ body.dark {
     margin: 0 auto;
     border-radius: 10px;
 }
+
 .bottom-content:hover {
     transition: all 0.3s;
     background-color: #bcbcbcc8;
 }
+
 .navbar {
-  position: fixed;
-  box-shadow: 0px 1px 5px 2px #73737338;
-  padding: 0 3vw;  
-  right: 0;
-  width: 81vw;
-  height: 10vh;
-  background-color: rgb(255, 255, 255);
-  display: flex;
-  align-items: center;
-  font-family: 'Montserrat', sans-serif;
-  justify-content: end;
+    position: fixed;
+    box-shadow: 0px 1px 5px 2px #73737338;
+    padding: 0 3vw;
+    right: 0;
+    width: 81vw;
+    height: 10vh;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    justify-content: end;
 }
+
 .navbar button {
     display: none;
     background-color: transparent;
     border: none;
     font-size: 4vh;
 }
+
 .navbar .search-box {
-  background-color: #e3e3e31e;
-  align-items: center;
-  width: 40%;
-  height: 40%;
-  border-radius: 5px;
-  display: flex;
-  border: 1px solid #7373736b;
-  /* box-shadow: 0px 1px 20px 5px #73737338; */
+    background-color: #e3e3e31e;
+    align-items: center;
+    width: 40%;
+    height: 40%;
+    border-radius: 5px;
+    display: flex;
+    border: 1px solid #7373736b;
+    /* box-shadow: 0px 1px 20px 5px #73737338; */
 }
+
 .navbar .search-box i {
-  font-size: 0.9vw;
-  padding-left: 1vw;
-  color: #737373a2;
+    font-size: 0.9vw;
+    padding-left: 1vw;
+    color: #737373a2;
 }
+
 .navbar .search-box input, .navbar .search-box input::after, .navbar .search-box input:focus {
-  width: 100%;
-  height: 100%;
-  border-radius: 0 40px 40px 0;
-  border: none;
-  box-sizing: 0;
-  box-shadow: 0;
-  outline: 0;
-  padding-left: 1vw;
-  font-size: 0.9vw;
-  font-weight: 500;
-  letter-spacing: normal;
-  background-color: transparent;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 40px 40px 0;
+    border: none;
+    box-sizing: 0;
+    box-shadow: 0;
+    outline: 0;
+    padding-left: 1vw;
+    font-size: 0.9vw;
+    font-weight: 500;
+    letter-spacing: normal;
+    background-color: transparent;
 }
+
 .navbar .search-box input::placeholder {
-  color: #737373a2;
+    color: #737373a2;
 }
+
 .navbar .notifications {
-  font-size: 1.2vw; 
-  color: #737373a2;
+    font-size: 1.2vw;
+    color: #737373a2;
+    padding: 0.5vw;
 }
+.navbar .notifications.alert {
+    color: red;
+}
+.navbar .notifications i:hover, .navbar .notifications .fa-bell.active {
+    color: var(--primary-color);
+}
+
 .navbar .user {
-  gap: 2vw;
-  margin-left: 5vw;
-  font-size: 1.01vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 550;
+    gap: 2vw;
+    margin-left: 5vw;
+    font-size: 1.01vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 550;
 }
+
 /* .navbar .nome {
   margin: 0 1vw;
 } */
 .navbar .photo {
-  background-color: red;
-  width: 2vw;
-  height: 2vw;
-  border-radius: 50%;
-  background-image: url(./gugu.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+    background-color: red;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+    background-image: url(./gugu.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
+
 .body-page {
     width: 81vw;
 }
+
 @media (orientation: portrait) {
     .sidebar header {
         margin-top: 3vw;
     }
+
     .sidebar .close-button {
         display: block;
     }
+
     .sidebar header .image {
         width: 15vh;
         height: 15vh;
     }
+
     .sidebar header .image-text p.marca {
         font-size: 3vh;
     }
+
     .sidebar header .image-text p.submarca {
         font-size: 1.7vh;
     }
+
     .sidebar li {
         height: 4vh;
     }
+
     .navbar {
         height: 8vh;
         width: 100%;
         justify-content: space-between;
     }
-    body.open-sidebar .sidebar{
+
+    body.open-sidebar .sidebar {
         display: block;
     }
+
     .sidebar {
         display: none;
         width: 100%;
     }
+
     .sidebar .icon {
         font-size: 2.4vh;
         width: 10vw;
     }
+
     .sidebar .icon.fa-regular.fa-folder {
-        font-size: 2vh  !important;
+        font-size: 2vh !important;
     }
+
     .sidebar .text {
         font-size: 1.8vh;
     }
+
     .bottom-content {
         display: flex;
         justify-content: center;
         align-items: center;
         padding-left: 0;
     }
+
     .bottom-content i {
         font-size: 2.0vh;
         margin-right: 2vh;
     }
+
     #app #body-page {
         width: 100%;
     }
+
     .navbar .user {
         font-size: 2vh;
     }
+
     .navbar button {
         display: block;
     }

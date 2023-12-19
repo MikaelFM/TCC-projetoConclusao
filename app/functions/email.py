@@ -62,7 +62,7 @@ def backup_emails_programados():
 
 def create_event_program_email(id_servidor, data, id_categoria):
     servidor = Servidor.query.filter_by(id=id_servidor).first()
-    evento = Eventos(None, data, servidor.nome, id_categoria, None, None, 1)
+    evento = Eventos(None, data, servidor.nome, id_categoria, None, None, None)
     id_evento = evento.save()
     if id_evento is None:
         return {"success": False, "msg": "Ocorreu um erro ao criar o evento"}

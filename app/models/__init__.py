@@ -32,6 +32,7 @@ class FuncionarioRH(db.Model, UserMixin):
             return False
         senha_correta = check_password_hash(funcionario.senha_padrao, self.senha_padrao)
         if not empty(funcionario) and senha_correta:
+            session['type'] = 'funcionario'
             return funcionario
         else:
             return False
@@ -120,7 +121,8 @@ class Servidor(db.Model):
     id_tipo = db.Column(db.Integer, ForeignKey('tipos_servidores.id'))
     email_confirmado = db.Column(db.Boolean, default=False)
 
-
+    def get_nome_by_id(self):
+        return (self.query.filter_by(id=self.id).first()).nome
     @staticmethod
     def getServidores():
         return execute("SELECT s.* FROM servidor s")
@@ -172,11 +174,12 @@ class Servidor(db.Model):
             return None
 
     def exists(self):
-        funcionario = self.query.filter_by(email=self.email, cpf=self.cpf).first()
-        if funcionario is None:
+        servidor = self.query.filter_by(email=self.email, cpf=self.cpf).first()
+        if servidor is None:
             return False
-        if not empty(funcionario):
-            return funcionario
+        if not empty(servidor):
+            session['type'] = 'servidor'
+            return servidor
         else:
             return False
 
@@ -257,12 +260,11 @@ class Eventos(db.Model):
     servidor_responsavel = db.Column(db.Integer, db.ForeignKey('servidor.id'))
     privacidade = db.Column(db.Integer, db.ForeignKey('privacidade_tipos.id'))
 
-    def __init__(self, id, data, descricao, categoria, funcionario_responsavel, servidor_responsavel, privacidade):
+    def __init__(self, id, data, descricao, categoria, servidor_responsavel, privacidade):
         self.id = id
         self.data = data
         self.descricao = descricao
         self.categoria = categoria
-        self.funcionario_responsavel = funcionario_responsavel
         self.servidor_responsavel = servidor_responsavel
         self.privacidade = privacidade
 
@@ -291,17 +293,24 @@ class Eventos(db.Model):
             return None
 
     @staticmethod
-    def getEventos():
-        return execute(f"""
+    def getEventos(type):
+        if type == 'funcionario':
+            where = "WHERE (e.servidor_responsavel IS NULL OR e.privacidade = 1)"
+        else:
+            where = "WHERE id_destinatario = :user_id OR e.servidor_responsavel = :user_id OR privacidade = 1"
+        sql = f"""
             SELECT e.*, s.nome as nome_servidor, e.descricao, ce.descricao as title,
             CONCAT(CAST(e.data AS CHAR), ' 00:00') as data,
-            (SELECT COALESCE((count(*) > 0), 0) FROM email_programado WHERE evento_vinculado = e.id) as has_vinculo
-            FROM eventos e 
+            (SELECT COALESCE((count(*) > 0), 0) FROM email_programado WHERE evento_vinculado = e.id) as has_vinculo,
+            ('{type}' = 'funcionario' OR COALESCE(e.servidor_responsavel,0) = :user_id) as can_edit
+            FROM eventos e
             LEFT JOIN servidor s ON e.servidor_responsavel = s.id 
             LEFT JOIN categoria_eventos ce ON e.categoria = ce.id
-            WHERE (e.servidor_responsavel = :user_id OR e.privacidade = 1)
+            LEFT JOIN email_programado ep ON ep.evento_vinculado = e.id
+            {where}
             ORDER BY data ASC
-            """, {"user_id": session['user_id']})
+        """
+        return execute(sql, {"user_id": session['user_id']})
 
 
 
@@ -401,12 +410,16 @@ class Arquivos(db.Model):
             return None
 
     @staticmethod
-    def getArquivos():
+    def getArquivos(type):
+        if type == 'funcionario':
+            where = "WHERE a.inserido_por IS NULL"
+        else:
+            where = "WHERE a.inserido_por = :user_id"
         return execute(f"""
             SELECT a.*, CAST(arquivo AS CHAR) AS arquivo, CAST(data_atualizacao AS CHAR) AS data_atualizacao
             FROM arquivos a 
             LEFT JOIN servidor s ON s.id = a.inserido_por
-            WHERE a.inserido_por IS NULL
+            {where}
             """, {"user_id": session['user_id']})
 
     def __repr__(self):

@@ -41,13 +41,13 @@ Vue.component('calendar-agenda', {
                 </div>
                 <div class="agenda">
                     <div class="mes-view" v-if="isMesView()">
-                        <div class="dia" v-for="(item, key) in arrayDatas" @click="$root.formEventos(null, item)">
+                        <div class="dia" v-for="(item, key) in arrayDatas">
                             <p class="numero-dia" :class="{'gray' : item.getMonth() !== getMes()}">{{item.getDate()}}</p>
                             <div v-if="getEventsDay(item).length <= 2">
                                 <div class="event" v-for="(evento) in getEventsDay(item)" @click="$root.openModalEvents(evento.id)">{{evento.descricao}}</div>
                             </div>
                             <div v-else>
-                                <div class="event" @click="$root.openModalEvents(getEventsDay(item)[0])">{{(getEventsDay(item)[0]).descricao}}</div>
+                                <div class="event" @click="$root.openModalEvents(getEventsDay(item)[0]['id'])">{{(getEventsDay(item)[0]).descricao}}</div>
                                 <div class="event button from-button-day" @click="$root.openModalEventsList(item)">Mais {{getEventsDay(item).length - 1}}</div>
                             </div>
                         </div>
@@ -200,7 +200,7 @@ Vue.component('navbar', {
                                 <span class="text nav-text">Agenda</span>
                             </router-link>
                         </li>
-                        <li class="nav-link" :class="{'selected' : this.$root.page == 'servidores'}">
+                        <li class="nav-link" :class="{'selected' : this.$root.page == 'servidores'}" v-if="this.$root.dados.tipo == 'funcionario'">
                             <router-link to="/servidores">
                                 <i class='bx bx-user icon'></i>
                                 <span class="text nav-text">Servidores</span>
@@ -212,7 +212,7 @@ Vue.component('navbar', {
                                 <span class="text nav-text">Arquivos</span>
                             </router-link>
                         </li>
-                        <li class="nav-link" :class="{'selected' : this.$root.page == 'registros'}">
+                        <li class="nav-link" :class="{'selected' : this.$root.page == 'registros'}" v-if="this.$root.dados.tipo == 'funcionario'">
                             <router-link to="/registros">
                                 <i class='bx bx-history icon'></i>
                                 <span class="text nav-text">Registros</span>
@@ -245,10 +245,10 @@ Vue.component('navbar', {
 <!--            </div>-->
             <button @click="$root.openMenu()" class='bx bx-menu-alt-left'></button>
             <div class="user">
-<!--                <p class="nome">{{ this.$root.getFirstName() }}  {{ this.$root.getLastName() }}</p>-->
+                <p class="nome">{{ this.$root.getNameUser() }}</p>
                 <!-- <div class="photo"></div>-->
-                <div class="notifications">
-                    <i class="fa-regular fa-bell"></i>
+                <div class="notifications" v-if="$root.dados.tipo == 'servidor'">
+                    <i class="fa-regular fa-bell" @click="$root.openCloseNotification()"></i>
                 </div>
             </div>
         </nav>

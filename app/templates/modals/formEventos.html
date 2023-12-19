@@ -30,7 +30,7 @@
         </div>
         <div class="control">
             <select v-model="privacidade" class="input">
-                <option value="" class="disabled" disabled>Privacidade</option>
+                <option value="" class="disabled" disabled>Selecione a privacidade</option>
                 <option v-for="(tipo) in tiposPrivacidade" :value="tipo.id">{{tipo.descricao}}</option>
             </select>
         </div>

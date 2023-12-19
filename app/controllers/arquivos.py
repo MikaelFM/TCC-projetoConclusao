@@ -16,7 +16,7 @@ def salvar(data):
                 bytes(data['arquivo'], encoding='utf8'),
                 data['tipo'],
                 data['tamanho'],
-                None,
+                (session['user_id'] if session['type'] == 'servidor' else None),
             )
         arquivo.save()
         return {'success': True}

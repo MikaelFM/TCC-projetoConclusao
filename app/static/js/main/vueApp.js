@@ -12,7 +12,8 @@ AppCreate = () => {
                 'arquivos': [],
                 'servidores': [],
                 'eventos': [],
-                'tiposPrivacidade': []
+                'tiposPrivacidade': [],
+                'tipo' : ''
             },
             meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
             dataAtual: null,
@@ -182,15 +183,20 @@ AppCreate = () => {
                 let disabled = eventSelected.has_vinculo == 1 ? 'disabled' : ''
                 event.stopPropagation();
                 let elClicked = $(event.target);
+                let buttons = "";
+                if(eventSelected.can_edit == 1){
+                    buttons = `
+                        <button onclick="App.formEventos(${id})" ${disabled}>
+                            <i class='bx bx-pencil'></i>
+                        </button>
+                        <button onclick="App.deleteEvento(${id})" ${disabled}> 
+                            <i class='bx bx-trash'></i>
+                        </button>`
+                }
                 let modal = `
                     <div id="modal" class="modal-event" style="opacity: 0; left: ${elClicked.offset().left}px; top: ${elClicked.offset().top}px">
                         <div class="top ${disabled}">
-                            <button onclick="App.formEventos(${id})" ${disabled}>
-                                <i class='bx bx-pencil'></i>
-                            </button>
-                            <button onclick="App.deleteEvento(${id})" ${disabled}> 
-                                <i class='bx bx-trash'></i>
-                            </button>
+                            ${buttons}
                             <button class="btn-close" onclick="App.closeModal(this, false)">
                                 ⨉
                             </button>
@@ -428,7 +434,7 @@ AppCreate = () => {
                     id: null,
                     descricao: '',
                     data: date != null ? this.formatarDataHora(date, 'YYYY-MM-DD') : '',
-                    privacidade: 1,
+                    privacidade: '',
                     tiposPrivacidade: vue_self.dados.tiposPrivacidade
                 };
 
@@ -660,6 +666,39 @@ AppCreate = () => {
             },
             isPortrait: function () {
                 return window.matchMedia("(orientation: portrait)").matches
+            },
+            openCloseNotification: function () {
+                if($('.notifications-box').hasClass('active')){
+                    $('.notifications-box').removeClass('active')
+                    $('fa-bell').removeClass('active')
+                } else {
+                    $('.notifications-box').addClass('active')
+                    $('fa-bell').addClass('active')
+                }
+            },
+            getSaudacao: function () {
+                if(this.dados.tipo == 'servidor'){
+                    return `Olá, ${this.dados.nome.split(' ')[0]}!`
+                } else {
+                    let saudacao = '';
+                    const hora = (new Date()).getHours();
+                    if (hora >= 6 && hora < 12) {
+                      saudacao = 'Bom dia!';
+                    } else if (hora >= 12 && hora < 18) {
+                      saudacao = 'Boa tarde!';
+                    } else {
+                      saudacao = 'Boa noite!';
+                    }
+                    return saudacao;
+                }
+            },
+            getNameUser: function () {
+                let nome = ''
+                if(this.dados.tipo == 'servidor'){
+                    let splitName = this.dados.nome.split(' ')
+                    nome = `${splitName[0]} ${splitName[splitName.length - 1]}`
+                }
+                return nome;
             }
         },
         mounted() {

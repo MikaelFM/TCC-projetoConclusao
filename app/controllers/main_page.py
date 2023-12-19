@@ -1,18 +1,22 @@
 from flask import session
 from app.models import *
 
+
 def getDados():
-    registros = EmailProgramado.getRegistros()
-    arquivos = Arquivos.getArquivos()
-    servidores = Servidor.getServidores()
-    eventos = Eventos.getEventos()
-    tipoServidores = TiposServidores.getTipoServidores()
-    privacidadeTipos = PrivacidadeTipos.getPrivacidadeTipos()
-    return {
-        'registros': registros,
-        'arquivos': arquivos,
-        'servidores': servidores,
-        'eventos': eventos,
-        'tipoServidores': tipoServidores,
-        'tiposPrivacidade':privacidadeTipos
+    type = session['type']
+
+    dados = {
+        'tipo': type,
+        'arquivos': Arquivos.getArquivos(type),
+        'eventos': Eventos.getEventos(type),
+        'tiposPrivacidade': PrivacidadeTipos.getPrivacidadeTipos()
     }
+
+    if type == 'funcionario':
+        dados['registros'] = EmailProgramado.getRegistros()
+        dados['servidores'] = Servidor.getServidores()
+        dados['tipoServidores'] = TiposServidores.getTipoServidores()
+    else:
+        dados['nome'] = Servidor(id=session['user_id']).get_nome_by_id()
+
+    return dados
