@@ -18,5 +18,6 @@ def getDados():
         dados['tipoServidores'] = TiposServidores.getTipoServidores()
     else:
         dados['nome'] = Servidor(id=session['user_id']).get_nome_by_id()
+        dados['notifications'] = Eventos.getNotifications()
 
-    return dados
+        return dados

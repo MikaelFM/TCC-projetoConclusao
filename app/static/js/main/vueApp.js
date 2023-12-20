@@ -13,7 +13,8 @@ AppCreate = () => {
                 'servidores': [],
                 'eventos': [],
                 'tiposPrivacidade': [],
-                'tipo' : ''
+                'tipo' : '',
+                'notifications': [],
             },
             meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
             dataAtual: null,
@@ -435,7 +436,11 @@ AppCreate = () => {
                     descricao: '',
                     data: date != null ? this.formatarDataHora(date, 'YYYY-MM-DD') : '',
                     privacidade: '',
-                    tiposPrivacidade: vue_self.dados.tiposPrivacidade
+                    tiposPrivacidade: vue_self.dados.tiposPrivacidade,
+                    isServidor: vue_self.dados.tipo == 'servidor',
+                    vincularServidores: false,
+                    servidoresVinculados: [],
+                    servidores: []
                 };
 
                 if (id !== null) {
@@ -445,6 +450,12 @@ AppCreate = () => {
                     data.descricao = evento.descricao;
                     data.data = evento.data.replace(' 00:00', '');
                     data.privacidade = evento.privacidade;
+                    data.servidoresVinculados = JSON.parse(evento.servidoresVinculados);
+                    data.vincularServidores = data.servidoresVinculados.length > 0;
+                }
+
+                if(vue_self.dados.tipo == 'funcionario'){
+                    data.servidores = vue_self.dados.servidores;
                 }
 
                 let callback = function () {
@@ -457,7 +468,7 @@ AppCreate = () => {
                                     (
                                         vue_self.empty(this.descricao) ||
                                         vue_self.empty(this.data) ||
-                                        vue_self.empty(this.privacidade)
+                                        (vue_self.empty(this.privacidade) && this.isServidor)
                                     )
                                 )
                             }
@@ -474,6 +485,7 @@ AppCreate = () => {
                                         descricao: vue_self.descricao,
                                         data: vue_self.data,
                                         privacidade: vue_self.privacidade,
+                                        servidoresVinculados: JSON.stringify(vue_self.servidoresVinculados)
                                     },
                                     success: function (response) {
                                         if(response.success){
@@ -512,7 +524,8 @@ AppCreate = () => {
                     id: null,
                     nome: '',
                     arquivo: [],
-                    base64: ''
+                    base64: '',
+                    inEdit:  false
                 };
 
                 if (id !== null) {
@@ -522,6 +535,7 @@ AppCreate = () => {
                     data.nome = arquivo.nome;
                     data.arquivo = arquivo.arquivo;
                     data.base64 = arquivo.base64
+                    data.inEdit = true;
                 }
 
                 let callback = function () {
@@ -534,7 +548,7 @@ AppCreate = () => {
                                     (
                                         vue_self.empty(this.nome) ||
                                         vue_self.empty(this.arquivo) ||
-                                        vue_self.empty(this.base64)
+                                        (vue_self.empty(this.base64) && !this.inEdit)
                                     )
                                 )
                             }
@@ -668,12 +682,17 @@ AppCreate = () => {
                 return window.matchMedia("(orientation: portrait)").matches
             },
             openCloseNotification: function () {
+                event.stopPropagation();
                 if($('.notifications-box').hasClass('active')){
-                    $('.notifications-box').removeClass('active')
-                    $('fa-bell').removeClass('active')
+                    $('.notifications-box').removeClass('active');
+                    $('.bxs-bell-ring').removeClass('active');
                 } else {
-                    $('.notifications-box').addClass('active')
-                    $('fa-bell').addClass('active')
+                    $('.notifications-box').addClass('active');
+                    $('.bxs-bell-ring').addClass('active');
+                    $(document).on('click', (ev) => {
+                         $('.notifications-box').removeClass('active');
+                         $('.bxs-bell-ring').removeClass('active');
+                    });
                 }
             },
             getSaudacao: function () {
@@ -713,7 +732,6 @@ AppCreate = () => {
                 vue_self.closeMenu()
             });
             vue_self.dataAtual = new Date();
-
         },
         router
     }).$mount('#app');

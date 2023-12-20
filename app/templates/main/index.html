@@ -5,14 +5,14 @@
         </div>
     </content>
     <navbar></navbar>
-    <div class="notifications-box">
+    <div class="notifications-box" v-if="dados.tipo == 'servidor'">
         <div class="top">
-            <button class="btn-close" onclick="App.closeModal(this)">⨉</button>
+            <button class="btn-close" onclick="App.openCloseNotification()">⨉</button>
         </div>
-        <div class="noti">
-            <p>Um e-mail foi enviado para você referente à renovação de contrato</p>
+        <div class="noti" v-if="dados.notifications.length > 0">
+            <p v-for="(noti) in dados.notifications" v-html="noti.texto"></p>
         </div>
-        <div class="noti">
+        <div class="noti" v-else>
             <p class="none">Nenhuma notificação não lida</p>
         </div>
     </div>

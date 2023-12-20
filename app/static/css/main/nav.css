@@ -282,7 +282,10 @@ body.dark {
 .navbar .notifications.alert {
     color: red;
 }
-.navbar .notifications i:hover, .navbar .notifications .fa-bell.active {
+.bxs-bell-ring {
+    color: black;
+}
+.navbar .notifications .bxs-bell-ring:hover, .navbar .notifications .bxs-bell-ring.active {
     color: var(--primary-color);
 }
 
@@ -304,7 +307,7 @@ body.dark {
     width: 2vw;
     height: 2vw;
     border-radius: 50%;
-    background-image: url(./gugu.jpg);
+    background-image: url('#');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -313,7 +316,11 @@ body.dark {
 .body-page {
     width: 81vw;
 }
-
+@media (max-width: 960px) {
+    .navbar .notifications {
+        font-size: 2vh;
+    }
+}
 @media (orientation: portrait) {
     .sidebar header {
         margin-top: 3vw;

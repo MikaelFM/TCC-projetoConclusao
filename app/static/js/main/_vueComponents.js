@@ -248,7 +248,13 @@ Vue.component('navbar', {
                 <p class="nome">{{ this.$root.getNameUser() }}</p>
                 <!-- <div class="photo"></div>-->
                 <div class="notifications" v-if="$root.dados.tipo == 'servidor'">
-                    <i class="fa-regular fa-bell" @click="$root.openCloseNotification()"></i>
+                    <i
+                      :class="{
+                        'bx bxs-bell-ring': $root.dados.tipo == 'servidor' && $root.dados.notifications.length > 0,
+                        'bx bx-bell': $root.dados.tipo != 'servidor' || $root.dados.notifications.length === 0
+                      }"
+                      @click="$root.openCloseNotification()"
+                    ></i>
                 </div>
             </div>
         </nav>

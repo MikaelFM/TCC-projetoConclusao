@@ -287,6 +287,13 @@
 #formServidores .input.disabled {
     color: #5d6061;
 }
+#formEventos .control.checks {
+    flex-direction: column;
+    height: auto;
+    align-items: start;
+    padding: 0 0 1vh 3vh;
+    font-size: 0.75vw;
+}
 #modal .error {
     margin-bottom: 0.5vw;
     justify-content: start;
@@ -332,7 +339,7 @@
         font-size: 5vh;
         margin: 0 0 6vh 0;
     }
-    .control {
+    .control:not(.checks) {
         height: 5vh !important;
         margin: 2vh;
         width: 65%;
@@ -345,6 +352,10 @@
         height: 95% !important;
         font-size: 1.6vh !important;
         padding: 0 2vh;
+    }
+    #formEventos .control.checks {
+        font-size: 1.6vh;
+        width: 65%;
     }
     #modal .label-input {
         font-size: 1.6vh !important;

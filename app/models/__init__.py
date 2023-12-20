@@ -295,21 +295,38 @@ class Eventos(db.Model):
     @staticmethod
     def getEventos(type):
         if type == 'funcionario':
-            where = "WHERE (e.servidor_responsavel IS NULL OR e.privacidade = 1)"
+            where = "WHERE (e.servidor_responsavel IS NULL OR e.privacidade = 1 OR e.privacidade IS NULL)"
         else:
-            where = "WHERE id_destinatario = :user_id OR e.servidor_responsavel = :user_id OR privacidade = 1"
+            where = "WHERE e.id in (SELECT id_evento FROM servidor_evento WHERE id_servidor = :user_id) OR e.servidor_responsavel = :user_id OR privacidade = 1"
         sql = f"""
             SELECT e.*, s.nome as nome_servidor, e.descricao, ce.descricao as title,
             CONCAT(CAST(e.data AS CHAR), ' 00:00') as data,
             (SELECT COALESCE((count(*) > 0), 0) FROM email_programado WHERE evento_vinculado = e.id) as has_vinculo,
-            ('{type}' = 'funcionario' OR COALESCE(e.servidor_responsavel,0) = :user_id) as can_edit
+            ('{type}' = 'funcionario' OR COALESCE(e.servidor_responsavel,0) = :user_id) as can_edit,
+            (SELECT COALESCE(CONCAT('[', GROUP_CONCAT(id_servidor SEPARATOR ','), ']'), '[]') FROM servidor_evento se WHERE id_evento = e.id) as servidoresVinculados
             FROM eventos e
             LEFT JOIN servidor s ON e.servidor_responsavel = s.id 
             LEFT JOIN categoria_eventos ce ON e.categoria = ce.id
-            LEFT JOIN email_programado ep ON ep.evento_vinculado = e.id
             {where}
             ORDER BY data ASC
         """
+        return execute(sql, {"user_id": session['user_id']})
+
+    @staticmethod
+    def getNotifications():
+        where = "WHERE e.id in (SELECT id_evento FROM servidor_evento WHERE id_servidor = :user_id) OR e.servidor_responsavel = :user_id OR privacidade = 1"
+        sql = f"""
+               SELECT 
+                    concat(
+                        'O evento <b>', 
+                        (CASE WHEN categoria = 1 THEN e.descricao ELSE ce.descricao END), 
+                        '</b> está marcado para ', 
+                        (CASE WHEN data = CURDATE() THEN 'hoje' ELSE 'amanhã' END)
+                    ) AS texto
+               FROM eventos e
+               LEFT JOIN categoria_eventos ce ON ce.id = e.categoria 
+               {where} AND data IN (CURDATE(), SUBDATE(CURDATE(), 1))
+               """
         return execute(sql, {"user_id": session['user_id']})
 
 
@@ -488,6 +505,10 @@ class ServidorEvento(db.Model):
         self.id_evento = id_evento
         self.id_servidor = id_servidor
 
+    @staticmethod
+    def deleteByEvent(idEvento):
+        execute("DELETE FROM servidor_evento WHERE id_evento = :id_evento", {'id_evento': idEvento})
+        return True
     def save(self):
         try:
             if self.id is None:

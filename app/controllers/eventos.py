@@ -1,3 +1,5 @@
+import json
+
 from app.models import *
 def salvar(data):
     try:
@@ -7,14 +9,22 @@ def salvar(data):
             data['descricao'],
             1,
             (session['user_id'] if session['type'] == 'servidor' else None),
-            data['privacidade'],
+            data['privacidade'] if data['privacidade'] != '' else None,
         )
-        evento.save()
+        idEvento = evento.save()
+        ServidorEvento.deleteByEvent(idEvento)
+
+        if len(json.loads(data['servidoresVinculados'])) > 0:
+            for idServidor in json.loads(data['servidoresVinculados']):
+                servidorEvento = ServidorEvento(None, idEvento, idServidor)
+                servidorEvento.save()
+
         return {'success': True}
     except Exception as e:
         return {'success': False, 'error': e}
 
 def delete(id):
+    ServidorEvento.deleteByEvent(id)
     evento = Eventos.query.get_or_404(id)
     db.session.delete(evento)
     db.session.commit()

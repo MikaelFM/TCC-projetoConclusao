@@ -13,7 +13,7 @@
              Descrição do Evento
         </label>
     </div>
-    <div class="control control-duple">
+    <div class="control control-duple" v-if="isServidor">
         <div class="control">
             <input
                     type="date"
@@ -34,6 +34,30 @@
                 <option v-for="(tipo) in tiposPrivacidade" :value="tipo.id">{{tipo.descricao}}</option>
             </select>
         </div>
+    </div>
+    <div class="control" v-else>
+        <input
+                type="date"
+                name="data"
+                class="input"
+                placeholder=""
+                v-model="data"
+        >
+        <label
+                class="label-input"
+        >
+            Data do Evento
+        </label>
+    </div>
+    <div class="control" style="justify-content: start" v-if="!isServidor">
+        <label>
+            <input type="checkbox" v-model="vincularServidores"> Vincular Servidores
+        </label>
+    </div>
+    <div class="control checks" v-if="vincularServidores">
+        <label v-for="(servidor) in servidores">
+            <input type="checkbox" :value="servidor.id" v-model="servidoresVinculados"> {{servidor.nome}}
+        </label>
     </div>
     <div class="control">
         <input class="input" type="submit" value="Confirmar" :disabled="!canSubmit">
