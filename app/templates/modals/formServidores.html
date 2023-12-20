@@ -23,6 +23,8 @@
                 placeholder=""
                 v-model="email"
                 maxlength="256"
+                :disabled="confirmed"
+                :class="{'disabled' : confirmed}"
         >
         <label
                 class="label-input"
@@ -55,6 +57,8 @@
                     placeholder=""
                     v-model="cpf"
                     v-mask="'###.###.###-##'"
+                    :disabled="confirmed"
+                    :class="{'disabled' : confirmed}"
             >
             <label
                     class="label-input"

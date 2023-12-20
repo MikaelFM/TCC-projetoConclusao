@@ -339,6 +339,7 @@ AppCreate = () => {
                     tipo: '',
                     tipoServidores: vue_self.dados.tipoServidores,
                     inEdit: false,
+                    confirmed: false,
                     msgError: ''
                 };
 
@@ -354,6 +355,7 @@ AppCreate = () => {
                     data.cargo = servidor.cargo;
                     data.foto = servidor.foto;
                     data.tipo = servidor.id_tipo ?? "";
+                    data.confirmed = servidor.email_confirmado == 1
                     data.inEdit = true;
                 }
 
