@@ -15,7 +15,7 @@
                 <div class="event" v-for="(evento) in this.$root.dados.eventos.slice(0,2)">
                     <p class="desc">{{evento.categoria != 1 ? evento.title : ''}}</p>
                     <p class="name">{{evento.descricao}}</p>
-                    <p class="date">{{$root.formatarDataHora(evento.data, 'DD/MM')}}</p>
+                    <p class="date">{{ $root.getDateEventFromHome(evento.data) }}</p>
                 </div>
                 <div class="event" v-if="$root.dados.eventos.length === 0">
                     <p class="desc">Nenhum evento</p>

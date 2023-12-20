@@ -48,6 +48,12 @@ def salvar(data):
 def delete(id):
     try:
         servidor = Servidor.query.get_or_404(id)
+
+        ServidorEvento.deleteByServidor(id)
+        Arquivos.deleteByServidor(id)
+        Eventos.deleteByServidor(id)
+        servidor.deleteConfirmations()
+
         email.delete_event_program_email(id)
         db.session.delete(servidor)
         db.session.commit()

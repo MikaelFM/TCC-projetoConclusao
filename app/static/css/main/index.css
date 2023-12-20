@@ -200,7 +200,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 4vh;
+    min-height: 4vh;
     padding: 2.5vw 1vw;
     border-bottom: 1px solid rgba(0, 0, 0, 0.09);
     cursor: pointer;
@@ -213,6 +213,7 @@
     font-weight: 500;
     font-size: 0.8vw;
     cursor: pointer;
+    padding: 1vh 0;
 }
 #app .notifications-box .noti p.none {
     color: #5d6061;

@@ -44,8 +44,9 @@ def programar_email(id_destinatario, data_hora_envio, assunto, texto, evento_vin
 def submit_email_by_id(email_id):
     with app.app_context():
         email = EmailProgramado.query.filter_by(id=email_id).first()
+        emailDestinatario = Servidor.query.filter_by(id=email.id_destinatario).first()
         if email and not email.enviado:
-            send(email.destinatario, email.assunto, email.texto)
+            send(emailDestinatario.email, email.assunto, email.texto)
             email.enviado = True
             email.save()
 
@@ -62,15 +63,16 @@ def backup_emails_programados():
 
 def create_event_program_email(id_servidor, data, id_categoria):
     servidor = Servidor.query.filter_by(id=id_servidor).first()
-    evento = Eventos(None, data, servidor.nome, id_categoria, None, None, None)
+    evento = Eventos(None, data, servidor.nome, id_categoria, None, None)
     id_evento = evento.save()
     if id_evento is None:
         return {"success": False, "msg": "Ocorreu um erro ao criar o evento"}
     servidor_evento = ServidorEvento(None, id_evento, id_servidor)
-    if servidor_evento is None:
+    save = servidor_evento.save()
+    if not save:
         return {"success": False, "msg": "Ocorreu um erro ao vincular evento e servidor"}
-    categoria = CategoriaEventos.query.filter_by(id=id_categoria).first()
-    return programar_email(id_servidor, data, categoria.descricao, categoria.texto_envio, id_evento, id=None)
+    categoria = CategoriaEventos.getFirstByID(id_categoria)
+    return programar_email(id_servidor, data, categoria['descricao'], categoria['texto_envio'], id_evento, id=None)
 
 def delete_event_program_email(id_servidor):
     idsAgendamentos = execute(

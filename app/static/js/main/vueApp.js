@@ -121,7 +121,9 @@ AppCreate = () => {
                 var segundos = dataJS.getSeconds().toString().padStart(2, '0');
                 var mesAbreviado = (vue_self.meses[dataJS.getMonth()]).substring(0, 3) + '.';
                 var diaDaSemana  = diasDaSemana[dataJS.getDay()]
-                return stringFormat.replace('|M|', mesAbreviado).replace('DD', dia).replace('MM', mes).replace('YYYY', ano).replace('H', horas).replace('M', minutos).replace('S', segundos).replace('Dd', diaDaSemana).replace('mm', mesExtenso)
+                var numeroAno = ano.substring(2)
+                return stringFormat.replace('|M|', mesAbreviado).replace('DD', dia).replace('MM', mes).replace('YYYY', ano).replace('H', horas).replace('M', minutos).replace('S', segundos).replace('Dd', diaDaSemana).replace('mm', mesExtenso).
+                    replace('y', numeroAno)
             },
             getFileClass: function (tipo) {
                 if (tipo == 'pdf') {
@@ -402,9 +404,6 @@ AppCreate = () => {
                                     dataType: 'json'
                                 });
                             }
-                        },
-                        mounted(){
-                             addValidations();
                         }
                     });
                 };
@@ -718,6 +717,12 @@ AppCreate = () => {
                     nome = `${splitName[0]} ${splitName[splitName.length - 1]}`
                 }
                 return nome;
+            },
+            getDateEventFromHome: function (date) {
+                if(date.split('-')[0] == this.dataAtual.getFullYear()){
+                    return this.formatarDataHora(date, 'DD/MM')
+                }
+                return this.formatarDataHora(date, 'DD/MM/y')
             }
         },
         mounted() {

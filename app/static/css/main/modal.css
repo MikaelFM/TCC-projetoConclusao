@@ -284,8 +284,9 @@
     max-width: 100%;
     word-break: break-word;
 }
-#formServidores .input.disabled {
+#formServidores .input.disabled, #formServidores .input.disabled::placeholder {
     color: #5d6061;
+    background: none;
 }
 #formEventos .control.checks {
     flex-direction: column;

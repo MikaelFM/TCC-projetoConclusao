@@ -117,7 +117,7 @@ section#home article#main-content .files .files-box .file .desc .date {
     color: #737373;
 }
 section#home article#main-content .files .files-box .file .desc .title {
-    max-width: 3vw;
+    max-width: 5vw;
     flex-wrap: wrap;
     font-size: 0.7vw;
 }

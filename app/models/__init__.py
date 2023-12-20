@@ -19,8 +19,6 @@ class FuncionarioRH(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     login_padrao = db.Column(db.String(258))
     senha_padrao = db.Column(db.String(110))
-    def deleteConfirmations(self):
-        return execute(f"""DELETE FROM teste.token_usuario WHERE user_id = {self.id} AND action = 'tokenUser'""")
 
     def emailExists(self):
         funcionario = self.query.filter_by(email=self.email).first()
@@ -121,6 +119,9 @@ class Servidor(db.Model):
     id_tipo = db.Column(db.Integer, ForeignKey('tipos_servidores.id'))
     email_confirmado = db.Column(db.Boolean, default=False)
 
+    def deleteConfirmations(self):
+        return execute(f"""DELETE FROM token_usuario WHERE user_id = {self.id}""")
+
     def get_nome_by_id(self):
         return (self.query.filter_by(id=self.id).first()).nome
     @staticmethod
@@ -135,7 +136,7 @@ class Servidor(db.Model):
                 cpf = '{self.cpf}' as 'CPF',
                 telefone = '{self.telefone}' as 'Telefone',
                 email = '{self.email}' as 'E-mail'
-            FROM teste.servidor 
+            FROM servidor 
             WHERE 
                 (
                     cpf = '{self.cpf}' or 
@@ -314,7 +315,7 @@ class Eventos(db.Model):
 
     @staticmethod
     def getNotifications():
-        where = "WHERE e.id in (SELECT id_evento FROM servidor_evento WHERE id_servidor = :user_id) OR e.servidor_responsavel = :user_id OR privacidade = 1"
+        where = "WHERE (e.id in (SELECT id_evento FROM servidor_evento WHERE id_servidor = :user_id) OR e.servidor_responsavel = :user_id OR privacidade = 1)"
         sql = f"""
                SELECT 
                     concat(
@@ -328,6 +329,11 @@ class Eventos(db.Model):
                {where} AND data IN (CURDATE(), SUBDATE(CURDATE(), 1))
                """
         return execute(sql, {"user_id": session['user_id']})
+
+    @staticmethod
+    def deleteByServidor(id_servidor):
+        execute("DELETE FROM eventos WHERE servidor_responsavel = :id_servidor", {'id_servidor': id_servidor})
+        return True
 
 
 
@@ -402,6 +408,11 @@ class Arquivos(db.Model):
         self.tamanho = tamanho
         self.inserido_por = inserido_por
 
+    @staticmethod
+    def deleteByServidor(id_servidor):
+        execute("DELETE FROM arquivos WHERE inserido_por = :id_servidor", {'id_servidor': id_servidor})
+        return True
+
     def save(self):
         try:
             if self.id is None:
@@ -447,6 +458,10 @@ class CategoriaEventos(db.Model):
     descricao = db.Column(db.String(30))
     arquivo_base_envio = db.Column(db.LargeBinary)
     texto_envio = db.Text()
+
+    @staticmethod
+    def getFirstByID(id):
+        return execute("SELECT ce.*, CAST(texto_envio AS CHAR) AS texto_envio FROM categoria_eventos ce WHERE ce.id = :id", {'id': id})[0]
     def save(self):
         try:
             if self.id is None:
@@ -506,8 +521,12 @@ class ServidorEvento(db.Model):
         self.id_servidor = id_servidor
 
     @staticmethod
-    def deleteByEvent(idEvento):
-        execute("DELETE FROM servidor_evento WHERE id_evento = :id_evento", {'id_evento': idEvento})
+    def deleteByEvent(id_evento):
+        execute("DELETE FROM servidor_evento WHERE id_evento = :id_evento", {'id_evento': id_evento})
+        return True
+    @staticmethod
+    def deleteByServidor(id_servidor):
+        execute("DELETE FROM servidor_evento WHERE id_servidor = :id_servidor", {'id_servidor': id_servidor})
         return True
     def save(self):
         try:

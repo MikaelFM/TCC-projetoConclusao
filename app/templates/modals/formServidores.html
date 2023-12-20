@@ -38,6 +38,7 @@
                     class="input format-number"
                     placeholder=""
                     v-model="telefone"
+                    v-mask="'(##) #####-####'"
             >
             <label
                     class="label-input"
@@ -47,11 +48,13 @@
         </div>
         <div class="control">
             <input
+                    id="cpf"
                     type="cpf"
                     name="cpf"
                     class="input format-cpf"
                     placeholder=""
                     v-model="cpf"
+                    v-mask="'###.###.###-##'"
             >
             <label
                     class="label-input"
@@ -78,7 +81,7 @@
             </label>
         </div>
         <div class="control">
-            <select v-model="tipo" class="input" :disabled="inEdit">
+            <select v-model="tipo" class="input" :disabled="inEdit" :class="{'disabled' : inEdit}">
                 <option value="" class="disabled" disabled>Tipo</option>
                 <option v-for="(tipo) in tipoServidores" :value="tipo.id">{{tipo.descricao}}</option>
             </select>

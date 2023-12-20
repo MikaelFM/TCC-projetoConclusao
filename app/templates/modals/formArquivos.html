@@ -16,7 +16,7 @@
     <div class="control control-file" v-if="id == null">
         <div id="file-drop" @dragover.prevent @drop="getFile">
             <label for="input-file" class="button">Selecione um arquivo</label>
-            <input id="input-file" type="file" @change="getFile">
+            <input id="input-file" type="file" @change="getFile" accept=".jpg, .jpeg, .png, .pdf">
             <span class="file-name">{{arquivo.name}}</span>
         </div>
     </div>
