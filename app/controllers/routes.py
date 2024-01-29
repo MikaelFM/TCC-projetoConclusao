@@ -70,9 +70,11 @@ def logout():
 @app.route("/saveFuncionario", methods=['POST'])
 def saveFuncionario():
     return servidores.salvar(request.form)
+    
 @app.route("/deleteFuncionario", methods=['POST'])
 def deleteFuncionario():
     return servidores.delete(request.form['id'])
+    
 @app.route("/saveEvento", methods=['POST'])
 def saveEvento():
     return eventos.salvar(request.form)
@@ -80,6 +82,7 @@ def saveEvento():
 @app.route("/deleteEvento", methods=['POST'])
 def deleteEvento():
     return eventos.delete(request.form['id'])
+    
 @app.route("/saveArquivo", methods=['POST'])
 def saveArquivo():
     return arquivos.salvar(request.form)
@@ -87,6 +90,7 @@ def saveArquivo():
 @app.route("/deleteFile", methods=['POST'])
 def deleteFile():
     return arquivos.delete(request.form['id'])
+    
 @app.route("/tasks")
 def tasks():
     try:
